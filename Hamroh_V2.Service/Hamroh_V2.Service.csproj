@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Hamroh_V2.Data\Hamroh_V2.Data.csproj" />
+    <ProjectReference Include="..\Hamroh_V2.Domain\Hamroh_V2.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

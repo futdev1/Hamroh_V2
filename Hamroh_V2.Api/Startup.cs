@@ -1,16 +1,16 @@
+using Hamroh_V2.Data.Contexts;
+using Hamroh_V2.Data.IRepositories;
+using Hamroh_V2.Data.Repositories;
+using Hamroh_V2.Service.Interfaces;
+using Hamroh_V2.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Hamroh_V2.Api
 {
@@ -26,11 +26,21 @@ namespace Hamroh_V2.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddDbContext<Hamroh_V2DbContext>(p =>
+            {
+                p.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            ///////////////////////////////////////////////////////////////////////////
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hamroh_V2.Api", Version = "v1" });
             });
+
+            
+
+            services.AddControllers();
+            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IClientRepository, ClientRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
