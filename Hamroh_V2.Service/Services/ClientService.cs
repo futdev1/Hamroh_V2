@@ -38,22 +38,22 @@ namespace Hamroh_V2.Service.Services
 
         public Task<bool> DeleteAsync(Expression<Func<Client, bool>> pred)
         {
-            throw new NotImplementedException();
+            return clientRepository.DeleteAsync(pred);
         }
 
-        public IQueryable<Client> GetAllAsync(Expression<Func<Task, bool>> pred)
+        public IQueryable<Client> GetAllAsync(Expression<Func<Client, bool>> pred = null)
         {
-            throw new NotImplementedException();
+            return clientRepository.GetAll(pred);
         }
 
         public Task<Client> GetAsync(Expression<Func<Client, bool>> pred)
         {
-            throw new NotImplementedException();
+            return clientRepository.GetAsync(pred);
         }
 
         public Task<Client> UpdateAsync(Client client)
         {
-            throw new NotImplementedException();
+            return clientRepository.UpdateAsync(client);
         }
     }
 }

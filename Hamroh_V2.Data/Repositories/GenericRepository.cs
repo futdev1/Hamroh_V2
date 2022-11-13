@@ -49,17 +49,21 @@ namespace Hamroh_V2.Data.Repositories
 
         public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null)
         {
-            throw new NotImplementedException();
+            return predicate == null ? _dbSet : _dbSet.Where(predicate);
         }
 
-        public Task<T> GetAsync(Expression<Func<T, bool>> predicate)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await _dbSet.FirstOrDefaultAsync(predicate);
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            EntityEntry entry = _dbSet.Update(entity);
+
+            await _dbContext.SaveChangesAsync();
+
+            return (T)entry.Entity;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Hamroh_V2.Service.Interfaces
 
         Task<bool> DeleteAsync(Expression<Func<Client, bool>> pred);
 
-        IQueryable<Client> GetAllAsync(Expression<Func<Task, bool>> pred);
+        IQueryable<Client> GetAllAsync(Expression<Func<Client, bool>> pred);
 
         Task<Client> GetAsync(Expression<Func<Client, bool>> pred);
 
