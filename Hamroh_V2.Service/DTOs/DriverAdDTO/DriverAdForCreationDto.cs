@@ -1,4 +1,5 @@
-﻿using Hamroh_V2.Service.DTOs.DriverDTO;
+﻿using Hamroh_V2.Domain.Entities.Drivers;
+using Hamroh_V2.Service.DTOs.DriverDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,6 +24,6 @@ namespace Hamroh_V2.Service.DTOs.DriverAdDTO
         public string Amenities { get; set; }
 
         [Required]
-        public IList<DriverForCreationDto> DriverData { get; set; }
+        public IList<Driver> DriverData { get; set; }
     }
 }
