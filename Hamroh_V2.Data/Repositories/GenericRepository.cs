@@ -1,13 +1,10 @@
 ﻿using Hamroh_V2.Data.Contexts;
 using Hamroh_V2.Data.IRepositories;
-using Hamroh_V2.Domain.Entities.Clients;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hamroh_V2.Data.Repositories
@@ -35,7 +32,7 @@ namespace Hamroh_V2.Data.Repositories
         {
             var client = await _dbSet.FirstOrDefaultAsync(predicate);
 
-            if(client == null)
+            if (client == null)
             {
                 return false;
             }

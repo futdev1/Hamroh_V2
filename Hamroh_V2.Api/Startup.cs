@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-
 namespace Hamroh_V2.Api
 {
     public class Startup
@@ -30,13 +29,11 @@ namespace Hamroh_V2.Api
             {
                 p.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
-            ///////////////////////////////////////////////////////////////////////////
+            //second label for clientRepository
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hamroh_V2.Api", Version = "v1" });
             });
-
-            
 
             services.AddControllers();
             services.AddScoped<IClientService, ClientService>();

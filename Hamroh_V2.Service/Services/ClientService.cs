@@ -3,10 +3,8 @@ using Hamroh_V2.Domain.Entities.Clients;
 using Hamroh_V2.Service.DTOs.ClientDTO;
 using Hamroh_V2.Service.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hamroh_V2.Service.Services
@@ -16,7 +14,7 @@ namespace Hamroh_V2.Service.Services
         internal IClientRepository clientRepository;
         public ClientService(IClientRepository _clientRepository)
         {
-             clientRepository = _clientRepository;
+            clientRepository = _clientRepository;
         }
 
         public Task<Client> CreateAsync(ClientForCreationDto clientDto)

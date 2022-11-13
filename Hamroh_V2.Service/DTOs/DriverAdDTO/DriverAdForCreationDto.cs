@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Hamroh_V2.Service.DTOs.DriverDTO;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Hamroh_V2.Service.DTOs.ClientDTO
+namespace Hamroh_V2.Service.DTOs.DriverAdDTO
 {
-    public class ClientForCreationDto
+    public class DriverAdForCreationDto
     {
         [Required]
         public string Qayerdan { get; set; }
@@ -15,16 +17,12 @@ namespace Hamroh_V2.Service.DTOs.ClientDTO
         public DateTime Date { get; set; }
 
         [Required]
-        public int PeopleCount { get; set; }
-
-        [Required]
-        public string PhoneNumber { get; set; }
-
         public string Summa { get; set; }
 
         [Required]
-        public string FirstName { get; set; }
+        public string Amenities { get; set; }
 
-        public string Comment { get; set; }
+        [Required]
+        public IList<DriverForCreationDto> DriverData { get; set; }
     }
 }

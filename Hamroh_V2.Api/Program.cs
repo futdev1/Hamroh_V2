@@ -1,12 +1,5 @@
-using Hamroh_V2.Data.IRepositories;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hamroh_V2.Api
 {
@@ -22,7 +15,7 @@ namespace Hamroh_V2.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    
+
                 });
     }
 }

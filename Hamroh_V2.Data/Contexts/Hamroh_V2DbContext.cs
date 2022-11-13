@@ -1,10 +1,7 @@
 ﻿using Hamroh_V2.Domain.Entities.Clients;
+using Hamroh_V2.Domain.Entities.DriverAds;
+using Hamroh_V2.Domain.Entities.Drivers;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hamroh_V2.Data.Contexts
 {
@@ -22,5 +19,8 @@ namespace Hamroh_V2.Data.Contexts
         }
 
         public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Driver> Drivers { get; set; }
+
+        public virtual DbSet<DriverAd> DriverAds { get; set; }
     }
 }

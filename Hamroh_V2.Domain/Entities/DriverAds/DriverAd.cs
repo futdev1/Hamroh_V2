@@ -6,6 +6,7 @@ namespace Hamroh_V2.Domain.Entities.DriverAds
 {
     public class DriverAd
     {
+        public long Id { get; set; }
         public string Qayerdan { get; set; }
 
         public string Qayerga { get; set; }

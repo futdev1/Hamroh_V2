@@ -9,7 +9,7 @@ namespace Hamroh_V2.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class ClientsController :ControllerBase
+    public class ClientsController : ControllerBase
     {
         private readonly IClientService clientService;
 

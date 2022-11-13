@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Hamroh_V2.Data\Hamroh_V2.Data.csproj" />
     <ProjectReference Include="..\Hamroh_V2.Domain\Hamroh_V2.Domain.csproj" />
   </ItemGroup>
