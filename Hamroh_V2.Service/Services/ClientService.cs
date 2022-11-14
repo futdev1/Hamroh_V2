@@ -49,9 +49,22 @@ namespace Hamroh_V2.Service.Services
             return clientRepository.GetAsync(pred);
         }
 
-        public Task<Client> UpdateAsync(Client client)
+        public async Task<Client> UpdateAsync(long id, ClientForCreationDto clientDto)
         {
-            return clientRepository.UpdateAsync(client);
+            Client client = await clientRepository.GetAsync(p => p.Id == id);
+
+            if(client != null)
+            {
+                client.FirstName = clientDto.FirstName;
+                client.PhoneNumber = clientDto.PhoneNumber;
+                client.Summa = clientDto.Summa;
+                client.Qayerdan = clientDto.Qayerdan;
+                client.Qayerga = clientDto.Qayerga;
+                client.Comment = clientDto.Comment;
+                client.PeopleCount = clientDto.PeopleCount;
+                client.Date = clientDto.Date;
+            }
+            return await clientRepository.UpdateAsync(client);
         }
     }
 }

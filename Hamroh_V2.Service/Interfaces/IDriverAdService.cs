@@ -19,6 +19,6 @@ namespace Hamroh_V2.Service.Interfaces
 
         Task<DriverAd> GetAsync(Expression<Func<DriverAd, bool>> pred);
 
-        Task<DriverAd> UpdateAsync(DriverAd client);
+        Task<DriverAd> UpdateAsync(long id, DriverAdForCreationDto client);
     }
 }

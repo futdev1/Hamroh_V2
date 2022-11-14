@@ -54,9 +54,20 @@ namespace Hamroh_V2.Service.Services
             return await driverAdRepository.GetAsync(pred); 
         }
 
-        public Task<DriverAd> UpdateAsync(DriverAd client)
+        public async Task<DriverAd> UpdateAsync(long id, DriverAdForCreationDto driverAdDto)
         {
-            return driverAdRepository.UpdateAsync(client);
+            DriverAd driverAd = await driverAdRepository.GetAsync(p => p.Id == id);
+            if(driverAd != null)
+            {
+                driverAd.Qayerdan = driverAdDto.Qayerdan;
+                driverAd .Qayerga = driverAdDto.Qayerga;
+                driverAd.Summa = driverAdDto.Summa;
+                driverAd.Date = driverAdDto.Date;
+                driverAd.Amenities = driverAdDto.Amenities;
+                driverAd.DriverData = driverAdDto.DriverData;
+            }
+
+            return await driverAdRepository.UpdateAsync(driverAd);
         }
     }
 }

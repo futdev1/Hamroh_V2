@@ -17,6 +17,6 @@ namespace Hamroh_V2.Service.Interfaces
 
         Task<Client> GetAsync(Expression<Func<Client, bool>> pred);
 
-        Task<Client> UpdateAsync(Client client);
+        Task<Client> UpdateAsync(long id, ClientForCreationDto client);
     }
 }

@@ -19,19 +19,19 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAsync(ClientForCreationDto clientDto)
+        public async Task<ActionResult> CreateAsync([FromForm] ClientForCreationDto clientDto)
         {
             return Ok(await clientService.CreateAsync(clientDto));
         }
 
-        [HttpDelete]
-        public async Task<bool> DeleteAsync(long id)
-        {
+        [HttpDelete("{id}")]
+        public async Task<bool> DeleteAsync([FromRoute] long id)
+        { 
             return await clientService.DeleteAsync(p => p.Id == id);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Client>> GetAsync(long id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Client>> GetAsync([FromRoute] long id)
         {
             return await clientService.GetAsync(p => p.Id == id);
         }
@@ -43,7 +43,12 @@ namespace Hamroh_V2.Api.Controllers
                 return clientService.GetAllAsync(p => p.Id > id);
             else
                 return clientService.GetAllAsync(null);
+        }
 
+        [HttpPut]
+        public async Task<ActionResult<Client>> UpdateAsync(long id, ClientForCreationDto clientDto)
+        {
+            return await clientService.UpdateAsync(id, clientDto);
         }
     }
 }

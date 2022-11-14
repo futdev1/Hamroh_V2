@@ -11,7 +11,7 @@ namespace Hamroh_V2.Service.Interfaces
 {
     public interface IDriverService
     {
-        Task<Driver> CreateAsync(DriverForCreationDto clientDto);
+        Task<Driver> CreateAsync(DriverForCreationDto driverDto);
 
         Task<bool> DeleteAsync(Expression<Func<Driver, bool>> pred);
 
@@ -19,6 +19,6 @@ namespace Hamroh_V2.Service.Interfaces
 
         Task<Driver> GetAsync(Expression<Func<Driver, bool>> pred);
 
-        Task<Driver> UpdateAsync(Driver client);
+        Task<Driver> UpdateAsync(Driver driverDto);
     }
 }
