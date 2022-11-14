@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hamroh_V2.Data.Migrations
 {
     [DbContext(typeof(Hamroh_V2DbContext))]
-    [Migration("20221113181115_secondMig")]
-    partial class secondMig
+    [Migration("20221114093043_firstMig")]
+    partial class firstMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
