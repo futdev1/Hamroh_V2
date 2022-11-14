@@ -15,10 +15,10 @@ namespace Hamroh_V2.Service.Interfaces
 
         Task<bool> DeleteAsync(Expression<Func<Driver, bool>> pred);
 
-        IQueryable<Driver> GetAllAsync(Expression<Func<Driver, bool>> pred);
+        IQueryable<Driver> GetAllAsync(Expression<Func<Driver, bool>> pred = null);
 
         Task<Driver> GetAsync(Expression<Func<Driver, bool>> pred);
 
-        Task<Driver> UpdateAsync(Driver driverDto);
+        Task<Driver> UpdateAsync(long id, DriverForCreationDto driverDto);
     }
 }

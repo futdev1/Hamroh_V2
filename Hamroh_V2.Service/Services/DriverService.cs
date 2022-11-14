@@ -3,10 +3,8 @@ using Hamroh_V2.Domain.Entities.Drivers;
 using Hamroh_V2.Service.DTOs.DriverDTO;
 using Hamroh_V2.Service.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hamroh_V2.Service.Services
@@ -25,8 +23,8 @@ namespace Hamroh_V2.Service.Services
             {
                 FullName = driverDto.FullName,
                 PhoneNumber = driverDto.PhoneNumber,
-                CarImage = driverDto.CarImage.ToString(),
-                DriverImage = driverDto.DriverImage.ToString(),
+                //CarImage = driverDto.CarImage,
+                //DriverImage = driverDto.DriverImage,
                 CarName = driverDto.CarName,
             };
 
@@ -38,7 +36,7 @@ namespace Hamroh_V2.Service.Services
             return await driverRepository.DeleteAsync(pred);
         }
 
-        public IQueryable<Driver> GetAllAsync(Expression<Func<Driver, bool>> pred)
+        public IQueryable<Driver> GetAllAsync(Expression<Func<Driver, bool>> pred = null)
         {
             return driverRepository.GetAll(pred);
         }
@@ -48,9 +46,22 @@ namespace Hamroh_V2.Service.Services
             return await driverRepository.GetAsync(pred);
         }
 
-        public Task<Driver> UpdateAsync(Driver client)
+        public async Task<Driver> UpdateAsync(long id, DriverForCreationDto driverDto)
         {
-            throw new NotImplementedException();
+            var driver = await driverRepository.GetAsync(p => p.Id == id);
+
+            if(driver != null)
+            {
+                driver.FullName = driverDto.FullName;
+                driver.PhoneNumber = driverDto.PhoneNumber;
+                driver.CarName = driverDto.CarName;
+                //driver.CarImage = driverDto.CarImage;
+                //driver.DriverImage = driverDto.DriverImage;
+
+            }
+
+
+            return await driverRepository.UpdateAsync(driver);
         }
     }
 }
