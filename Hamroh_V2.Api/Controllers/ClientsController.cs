@@ -1,4 +1,6 @@
-﻿using Hamroh_V2.Domain.Entities.Clients;
+﻿using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Entities.Clients;
+using Hamroh_V2.Domain.Enums;
 using Hamroh_V2.Service.DTOs.ClientDTO;
 using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +27,10 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<bool> DeleteAsync([FromRoute] long id)
+        public async Task<ActionResult<BaseResponse<bool>>> DeleteAsync([FromRoute] long id)
         { 
-            return await clientService.DeleteAsync(p => p.Id == id);
+            var result = await clientService.DeleteAsync(p => p.Id == id && p.State != ItemState.Deleted);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpGet("{id}")]

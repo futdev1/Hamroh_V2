@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hamroh_V2.Domain.Enums;
+using System;
 
 namespace Hamroh_V2.Domain.Entities.Clients
 {
@@ -20,6 +21,29 @@ namespace Hamroh_V2.Domain.Entities.Clients
 
         public string FirstName { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+        public DateTime DeletedAt { get;  set; }
+        public ItemState State { get; set; }
+
         public string Comment { get; set; }
+        public DateTime UpdatedAt { get;  set; }
+
+        public void Update()
+        {
+            UpdatedAt = DateTime.Now;
+            State = ItemState.Updated;
+        }
+
+        public void Create()
+        {
+            CreatedAt = DateTime.Now;
+            State = ItemState.Created;
+        }
+
+        public void Delete()
+        {
+            DeletedAt = DateTime.Now;
+            State = ItemState.Deleted;
+        }
     }
 }

@@ -21,7 +21,11 @@ namespace Hamroh_V2.Data.Migrations
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     Summa = table.Column<string>(type: "text", nullable: true),
                     FirstName = table.Column<string>(type: "text", nullable: true),
-                    Comment = table.Column<string>(type: "text", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    State = table.Column<int>(type: "integer", nullable: false),
+                    Comment = table.Column<string>(type: "text", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,7 +42,11 @@ namespace Hamroh_V2.Data.Migrations
                     Qayerga = table.Column<string>(type: "text", nullable: true),
                     Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Summa = table.Column<string>(type: "text", nullable: true),
-                    Amenities = table.Column<string>(type: "text", nullable: true)
+                    Amenities = table.Column<string>(type: "text", nullable: true),
+                    State = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,6 +63,10 @@ namespace Hamroh_V2.Data.Migrations
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     CarImage = table.Column<string>(type: "text", nullable: true),
                     DriverImage = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    State = table.Column<int>(type: "integer", nullable: false),
                     CarName = table.Column<string>(type: "text", nullable: true),
                     DriverAdId = table.Column<long>(type: "bigint", nullable: true)
                 },

@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hamroh_V2.Data.Migrations
 {
     [DbContext(typeof(Hamroh_V2DbContext))]
-    [Migration("20221114093043_firstMig")]
+    [Migration("20221118175718_firstMig")]
     partial class firstMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,13 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("DeletedAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("FirstName")
@@ -49,8 +55,14 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<string>("Qayerga")
                         .HasColumnType("text");
 
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Summa")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -67,7 +79,13 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<string>("Amenities")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("DeletedAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Qayerdan")
@@ -76,8 +94,14 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<string>("Qayerga")
                         .HasColumnType("text");
 
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Summa")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -97,6 +121,12 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<string>("CarName")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<long?>("DriverAdId")
                         .HasColumnType("bigint");
 
@@ -108,6 +138,12 @@ namespace Hamroh_V2.Data.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
+
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 

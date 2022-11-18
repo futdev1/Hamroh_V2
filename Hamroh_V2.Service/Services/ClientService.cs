@@ -1,7 +1,10 @@
 ﻿using Hamroh_V2.Data.IRepositories;
+using Hamroh_V2.Domain.Commons;
 using Hamroh_V2.Domain.Entities.Clients;
 using Hamroh_V2.Service.DTOs.ClientDTO;
 using Hamroh_V2.Service.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,9 +15,14 @@ namespace Hamroh_V2.Service.Services
     public class ClientService : IClientService
     {
         internal IClientRepository clientRepository;
-        public ClientService(IClientRepository _clientRepository)
+        internal IConfiguration config;
+        internal IWebHostEnvironment env;
+
+        public ClientService(IClientRepository clientRepository, IConfiguration config, IWebHostEnvironment env)
         {
-            clientRepository = _clientRepository;
+            this.clientRepository = clientRepository;
+            this.config = config;
+            this.env = env;
         }
 
         public Task<Client> CreateAsync(ClientForCreationDto clientDto)
@@ -32,11 +40,31 @@ namespace Hamroh_V2.Service.Services
             };
 
             return clientRepository.CreateAsync(client);
+            
         }
 
-        public Task<bool> DeleteAsync(Expression<Func<Client, bool>> pred)
+        public async Task<BaseResponse<bool>> DeleteAsync(Expression<Func<Client, bool>> pred)
         {
-            return clientRepository.DeleteAsync(pred);
+            BaseResponse<bool> response = new BaseResponse<bool>();
+
+            Client client = await clientRepository.GetAsync(pred);
+
+            if (client == null)
+            {
+                response.Error = new ErrorResponse(404, "Client not found");
+                return response;
+            }
+
+            else
+            {
+                client.Delete();
+
+                Client result = await clientRepository.UpdateAsync(client);
+
+                response.Data = true;
+
+                return response;
+            }
         }
 
         public IQueryable<Client> GetAllAsync(Expression<Func<Client, bool>> pred = null)

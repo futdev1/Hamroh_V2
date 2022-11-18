@@ -1,4 +1,5 @@
-﻿using Hamroh_V2.Domain.Entities.Clients;
+﻿using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Entities.Clients;
 using Hamroh_V2.Service.DTOs.ClientDTO;
 using System;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Hamroh_V2.Service.Interfaces
     {
         Task<Client> CreateAsync(ClientForCreationDto clientDto);
 
-        Task<bool> DeleteAsync(Expression<Func<Client, bool>> pred);
+        Task<BaseResponse<bool>> DeleteAsync(Expression<Func<Client, bool>> pred);
 
         IQueryable<Client> GetAllAsync(Expression<Func<Client, bool>> pred);
 
