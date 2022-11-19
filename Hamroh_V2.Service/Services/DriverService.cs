@@ -3,6 +3,7 @@ using Hamroh_V2.Domain.Entities.Drivers;
 using Hamroh_V2.Service.DTOs.DriverDTO;
 using Hamroh_V2.Service.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace Hamroh_V2.Service.Services
             return await driverRepository.DeleteAsync(pred);
         }
 
-        public IQueryable<Driver> GetAllAsync(Expression<Func<Driver, bool>> pred = null)
+        public IEnumerable<Driver> GetAll(Expression<Func<Driver, bool>> pred = null)
         {
             return driverRepository.GetAll(pred);
         }

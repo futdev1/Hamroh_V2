@@ -21,9 +21,9 @@ namespace Hamroh_V2.Domain.Entities.Clients
 
         public string FirstName { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime DeletedAt { get;  set; }
-        public ItemState State { get; set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime DeletedAt { get; private set; }
+        public ItemState State { get; private set; }
 
         public string Comment { get; set; }
         public DateTime UpdatedAt { get;  set; }

@@ -2,6 +2,7 @@ using Hamroh_V2.Data.Contexts;
 using Hamroh_V2.Data.IRepositories;
 using Hamroh_V2.Data.Repositories;
 using Hamroh_V2.Service.Interfaces;
+using Hamroh_V2.Service.Mappers;
 using Hamroh_V2.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +36,11 @@ namespace Hamroh_V2.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hamroh_V2.Api", Version = "v1" });
             });
 
-            services.AddControllers();
+            
+
+            services.AddControllers().AddNewtonsoftJson();
+
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IClientRepository, ClientRepository>();

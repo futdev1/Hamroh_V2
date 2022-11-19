@@ -44,7 +44,7 @@ namespace Hamroh_V2.Service.Services
             return await driverAdRepository.DeleteAsync(pred);
         }
 
-        public IQueryable<DriverAd> GetAllAsync(Expression<Func<DriverAd, bool>> pred)
+        public IEnumerable<DriverAd> GetAll(Expression<Func<DriverAd, bool>> pred)
         {
             return driverAdRepository.GetAll(pred);
         }

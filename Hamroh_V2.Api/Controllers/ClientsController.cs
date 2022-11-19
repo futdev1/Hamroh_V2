@@ -4,6 +4,7 @@ using Hamroh_V2.Domain.Enums;
 using Hamroh_V2.Service.DTOs.ClientDTO;
 using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,9 +22,10 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAsync([FromForm] ClientForCreationDto clientDto)
+        public async Task<ActionResult<BaseResponse<Client>>> CreateAsync([FromForm] ClientForCreationDto clientDto)
         {
-            return Ok(await clientService.CreateAsync(clientDto));
+            var result =  await clientService.CreateAsync(clientDto);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpDelete("{id}")]
@@ -34,24 +36,26 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Client>> GetAsync([FromRoute] long id)
+        public async Task<ActionResult<BaseResponse<Client>>> GetAsync([FromRoute] long id)
         {
-            return await clientService.GetAsync(p => p.Id == id);
+            var result = await clientService.GetAsync(p => p.Id == id);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpGet]
-        public IQueryable<Client> GetAllAsync(long? id)
+        public ActionResult<BaseResponse<IEnumerable<Client>>> GetAllAsync([FromQuery] long? id)
         {
-            if (id != null)
-                return clientService.GetAllAsync(p => p.Id > id);
-            else
-                return clientService.GetAllAsync(null);
+            var result = clientService.GetAll(p => p.Id == id);
+
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Client>> UpdateAsync(long id, ClientForCreationDto clientDto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<BaseResponse<Client>>> UpdateAsync(long id, ClientForCreationDto clientDto)
         {
-            return await clientService.UpdateAsync(id, clientDto);
+            var result = await clientService.UpdateAsync(id, clientDto);
+
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
     }
 }

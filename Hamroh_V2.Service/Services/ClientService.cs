@@ -1,4 +1,5 @@
-﻿using Hamroh_V2.Data.IRepositories;
+﻿using AutoMapper;
+using Hamroh_V2.Data.IRepositories;
 using Hamroh_V2.Domain.Commons;
 using Hamroh_V2.Domain.Entities.Clients;
 using Hamroh_V2.Service.DTOs.ClientDTO;
@@ -6,6 +7,7 @@ using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -16,31 +18,30 @@ namespace Hamroh_V2.Service.Services
     {
         internal IClientRepository clientRepository;
         internal IConfiguration config;
+        internal IMapper mapper;
         internal IWebHostEnvironment env;
 
-        public ClientService(IClientRepository clientRepository, IConfiguration config, IWebHostEnvironment env)
+        public ClientService(IClientRepository clientRepository, IConfiguration config, IWebHostEnvironment env, IMapper mapper)
         {
             this.clientRepository = clientRepository;
             this.config = config;
             this.env = env;
+            this.mapper = mapper;
         }
 
-        public Task<Client> CreateAsync(ClientForCreationDto clientDto)
+        public async Task<BaseResponse<Client>> CreateAsync(ClientForCreationDto clientDto)
         {
-            Client client = new Client()
-            {
-                FirstName = clientDto.FirstName,
-                Qayerdan = clientDto.Qayerdan,
-                Qayerga = clientDto.Qayerga,
-                Date = clientDto.Date,
-                PeopleCount = clientDto.PeopleCount,
-                PhoneNumber = clientDto.PhoneNumber,
-                Summa = clientDto.Summa,
-                Comment = clientDto.Comment
-            };
+            BaseResponse <Client> response = new BaseResponse<Client>();
 
-            return clientRepository.CreateAsync(client);
-            
+            Client mappedClient = mapper.Map<Client>(clientDto);
+
+            mappedClient.Create();
+
+            Client result  = await clientRepository.CreateAsync(mappedClient);
+
+            response.Data = result;
+
+            return response;
         }
 
         public async Task<BaseResponse<bool>> DeleteAsync(Expression<Func<Client, bool>> pred)
@@ -67,21 +68,47 @@ namespace Hamroh_V2.Service.Services
             }
         }
 
-        public IQueryable<Client> GetAllAsync(Expression<Func<Client, bool>> pred = null)
+        public BaseResponse<IEnumerable<Client>> GetAll(Expression<Func<Client, bool>> pred = null)
         {
-            return clientRepository.GetAll(pred);
+            BaseResponse<IEnumerable<Client>> response = new BaseResponse<IEnumerable<Client>>();
+
+            IEnumerable<Client> result = clientRepository.GetAll(pred);
+
+            response.Data = result;
+
+            return response;
         }
 
-        public Task<Client> GetAsync(Expression<Func<Client, bool>> pred)
+        public async Task<BaseResponse<Client>> GetAsync(Expression<Func<Client, bool>> pred)
         {
-            return clientRepository.GetAsync(pred);
+            BaseResponse<Client> response = new BaseResponse<Client>();
+
+            Client client = await clientRepository.GetAsync(pred);
+
+            if(client == null)
+            {
+                response.Error = new ErrorResponse(404, "Client not found");
+                return response;
+            }
+
+            response.Data = client;
+
+            return response;
         }
 
-        public async Task<Client> UpdateAsync(long id, ClientForCreationDto clientDto)
+        public async Task<BaseResponse<Client>> UpdateAsync(long id, ClientForCreationDto clientDto)
         {
+            BaseResponse<Client> response = new BaseResponse<Client>();
+
             Client client = await clientRepository.GetAsync(p => p.Id == id);
 
-            if(client != null)
+            if(client == null)
+            {
+                response.Error = new ErrorResponse(404, "Client not found");
+                return response;
+            }
+
+            else
             {
                 client.FirstName = clientDto.FirstName;
                 client.PhoneNumber = clientDto.PhoneNumber;
@@ -91,8 +118,14 @@ namespace Hamroh_V2.Service.Services
                 client.Comment = clientDto.Comment;
                 client.PeopleCount = clientDto.PeopleCount;
                 client.Date = clientDto.Date;
+                client.Update();
+
+                Client result = await clientRepository.UpdateAsync(client);
+
+                response.Data = result;
+
+                return response;
             }
-            return await clientRepository.UpdateAsync(client);
         }
     }
 }

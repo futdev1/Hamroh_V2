@@ -3,6 +3,7 @@ using Hamroh_V2.Data.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -44,9 +45,11 @@ namespace Hamroh_V2.Data.Repositories
             }
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null)
         {
-            return predicate == null ? _dbSet : _dbSet.Where(predicate);
+            IEnumerable<T> result = predicate == null ? _dbSet : _dbSet.Where(predicate);
+
+            return result;
         }
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)

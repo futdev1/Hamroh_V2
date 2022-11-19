@@ -3,6 +3,7 @@ using Hamroh_V2.Domain.Entities.Drivers;
 using Hamroh_V2.Service.DTOs.DriverAdDTO;
 using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,9 +33,9 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpGet]
-        public IQueryable<DriverAd> GetAll(long id)
+        public IEnumerable<DriverAd> GetAll(long id)
         {
-            return driverAdService.GetAllAsync(p => p.Id > id);
+            return driverAdService.GetAll(p => p.Id > id);
         }
 
         [HttpDelete]
