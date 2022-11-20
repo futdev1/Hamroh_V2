@@ -45,11 +45,9 @@ namespace Hamroh_V2.Data.Repositories
             }
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null)
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null)
         {
-            IEnumerable<T> result = predicate == null ? _dbSet : _dbSet.Where(predicate);
-
-            return result;
+            return predicate is null ? _dbSet : _dbSet.Where(predicate); 
         }
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)

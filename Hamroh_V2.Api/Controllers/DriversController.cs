@@ -1,4 +1,5 @@
-﻿using Hamroh_V2.Domain.Entities.Drivers;
+﻿using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Entities.Drivers;
 using Hamroh_V2.Service.DTOs.DriverDTO;
 using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,10 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Driver>> CreateAsync([FromForm] DriverForCreationDto driverDto)
+        public async Task<ActionResult<BaseResponse<Driver>>> CreateAsync([FromForm] DriverForCreationDto driverDto)
         {
-            return Ok(await driverService.CreateAsync(driverDto));
+            var result = await driverService.CreateAsync(driverDto);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpGet("{id}")]

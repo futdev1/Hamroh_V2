@@ -45,9 +45,18 @@ namespace Hamroh_V2.Api.Controllers
         [HttpGet]
         public ActionResult<BaseResponse<IEnumerable<Client>>> GetAllAsync([FromQuery] long? id)
         {
-            var result = clientService.GetAll(p => p.Id == id);
+            if (id != null)
+            {
+                var result = clientService.GetAll(p => p.Id > id);
+                return StatusCode(result.Code ?? result.Error.Code.Value, result);
+            }
 
-            return StatusCode(result.Code ?? result.Error.Code.Value, result);
+            else
+            {
+                var results = clientService.GetAll(null);
+                return StatusCode(results.Code ?? results.Error.Code.Value, results);
+            }
+          
         }
 
         [HttpPut("{id}")]

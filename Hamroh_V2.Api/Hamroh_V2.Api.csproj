@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -19,6 +19,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Hamroh_V2.Data\Hamroh_V2.Data.csproj" />
     <ProjectReference Include="..\Hamroh_V2.Service\Hamroh_V2.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\Audios\" />
+    <Folder Include="wwwroot\Videos\" />
   </ItemGroup>
 
 </Project>

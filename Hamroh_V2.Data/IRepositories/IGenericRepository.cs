@@ -12,7 +12,7 @@ namespace Hamroh_V2.Data.IRepositories
 
         Task<bool> DeleteAsync(Expression<Func<T, bool>> predicate);
 
-        IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null);
+        IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null);
 
         Task<T> GetAsync(Expression<Func<T, bool>> predicate);
 
