@@ -112,12 +112,6 @@ namespace Hamroh_V2.Service.Services
             {
                 client.FirstName = clientDto.FirstName;
                 client.PhoneNumber = clientDto.PhoneNumber;
-                client.Summa = clientDto.Summa;
-                client.Qayerdan = clientDto.Qayerdan;
-                client.Qayerga = clientDto.Qayerga;
-                client.Comment = clientDto.Comment;
-                client.PeopleCount = clientDto.PeopleCount;
-                client.Date = clientDto.Date;
                 client.Update();
 
                 Client result = await clientRepository.UpdateAsync(client);

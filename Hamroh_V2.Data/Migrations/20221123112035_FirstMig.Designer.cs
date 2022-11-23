@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hamroh_V2.Data.Migrations
 {
     [DbContext(typeof(Hamroh_V2DbContext))]
-    [Migration("20221118175718_firstMig")]
-    partial class firstMig
+    [Migration("20221123112035_FirstMig")]
+    partial class FirstMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,12 +21,15 @@ namespace Hamroh_V2.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("Hamroh_V2.Domain.Entities.Clients.Client", b =>
+            modelBuilder.Entity("Hamroh_V2.Domain.Entities.ClientAds.ClientAd", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Comment")
                         .HasColumnType("text");
@@ -40,26 +43,53 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
                     b.Property<int>("PeopleCount")
                         .HasColumnType("integer");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
                     b.Property<string>("Qayerdan")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Qayerga")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
                     b.Property<string>("Summa")
+                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClientAds");
+                });
+
+            modelBuilder.Entity("Hamroh_V2.Domain.Entities.Clients.Client", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -79,6 +109,9 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<string>("Amenities")
                         .HasColumnType("text");
 
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
@@ -88,16 +121,22 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<long>("DriverId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Qayerdan")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Qayerga")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
                     b.Property<string>("Summa")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -127,9 +166,6 @@ namespace Hamroh_V2.Data.Migrations
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long?>("DriverAdId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("DriverImage")
                         .HasColumnType("text");
 
@@ -147,21 +183,7 @@ namespace Hamroh_V2.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DriverAdId");
-
                     b.ToTable("Drivers");
-                });
-
-            modelBuilder.Entity("Hamroh_V2.Domain.Entities.Drivers.Driver", b =>
-                {
-                    b.HasOne("Hamroh_V2.Domain.Entities.DriverAds.DriverAd", null)
-                        .WithMany("DriverData")
-                        .HasForeignKey("DriverAdId");
-                });
-
-            modelBuilder.Entity("Hamroh_V2.Domain.Entities.DriverAds.DriverAd", b =>
-                {
-                    b.Navigation("DriverData");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,27 +4,44 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hamroh_V2.Data.Migrations
 {
-    public partial class firstMig : Migration
+    public partial class FirstMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ClientAds",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Qayerdan = table.Column<string>(type: "text", nullable: false),
+                    Qayerga = table.Column<string>(type: "text", nullable: false),
+                    PeopleCount = table.Column<int>(type: "integer", nullable: false),
+                    Summa = table.Column<string>(type: "text", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Comment = table.Column<string>(type: "text", nullable: true),
+                    ClientId = table.Column<long>(type: "bigint", nullable: false),
+                    State = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientAds", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Clients",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Qayerdan = table.Column<string>(type: "text", nullable: true),
-                    Qayerga = table.Column<string>(type: "text", nullable: true),
-                    Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    PeopleCount = table.Column<int>(type: "integer", nullable: false),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    Summa = table.Column<string>(type: "text", nullable: true),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     State = table.Column<int>(type: "integer", nullable: false),
-                    Comment = table.Column<string>(type: "text", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
@@ -38,11 +55,13 @@ namespace Hamroh_V2.Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Qayerdan = table.Column<string>(type: "text", nullable: true),
-                    Qayerga = table.Column<string>(type: "text", nullable: true),
+                    Qayerdan = table.Column<string>(type: "text", nullable: false),
+                    Qayerga = table.Column<string>(type: "text", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Summa = table.Column<string>(type: "text", nullable: true),
+                    Summa = table.Column<string>(type: "text", nullable: false),
                     Amenities = table.Column<string>(type: "text", nullable: true),
+                    Comment = table.Column<string>(type: "text", nullable: true),
+                    DriverId = table.Column<long>(type: "bigint", nullable: false),
                     State = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -63,40 +82,31 @@ namespace Hamroh_V2.Data.Migrations
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     CarImage = table.Column<string>(type: "text", nullable: true),
                     DriverImage = table.Column<string>(type: "text", nullable: true),
+                    CarName = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    State = table.Column<int>(type: "integer", nullable: false),
-                    CarName = table.Column<string>(type: "text", nullable: true),
-                    DriverAdId = table.Column<long>(type: "bigint", nullable: true)
+                    State = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Drivers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Drivers_DriverAds_DriverAdId",
-                        column: x => x.DriverAdId,
-                        principalTable: "DriverAds",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Drivers_DriverAdId",
-                table: "Drivers",
-                column: "DriverAdId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ClientAds");
+
+            migrationBuilder.DropTable(
                 name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "Drivers");
+                name: "DriverAds");
 
             migrationBuilder.DropTable(
-                name: "DriverAds");
+                name: "Drivers");
         }
     }
 }

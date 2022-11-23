@@ -24,7 +24,6 @@ namespace Hamroh_V2.Service.Services
 
         public async Task<DriverAd> CreateAsync(DriverAdForCreationDto driverAdDto)
         {
-            IList<Driver> drivers = driverAdDto.DriverData;
             DriverAd driverAd = new DriverAd()
             {
                 Qayerdan = driverAdDto.Qayerdan,
@@ -32,9 +31,7 @@ namespace Hamroh_V2.Service.Services
                 Summa = driverAdDto.Summa,
                 Date = driverAdDto.Date,
                 Amenities = driverAdDto.Amenities,
-                DriverData = drivers
             };
-
 
             return await driverAdRepository.CreateAsync(driverAd);
         }
@@ -64,7 +61,6 @@ namespace Hamroh_V2.Service.Services
                 driverAd.Summa = driverAdDto.Summa;
                 driverAd.Date = driverAdDto.Date;
                 driverAd.Amenities = driverAdDto.Amenities;
-                driverAd.DriverData = driverAdDto.DriverData;
             }
 
             return await driverAdRepository.UpdateAsync(driverAd);
