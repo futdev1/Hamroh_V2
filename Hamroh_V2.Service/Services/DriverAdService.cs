@@ -1,7 +1,10 @@
-﻿using Hamroh_V2.Data.IRepositories;
+﻿using AutoMapper;
+using Hamroh_V2.Data.IRepositories;
+using Hamroh_V2.Domain.Commons;
 using Hamroh_V2.Domain.Entities.DriverAds;
 using Hamroh_V2.Service.DTOs.DriverAdDTO;
 using Hamroh_V2.Service.Interfaces;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -12,24 +15,27 @@ namespace Hamroh_V2.Service.Services
     public class DriverAdService : IDriverAdService
     {
         internal IDriverAdRepository driverAdRepository;
+        internal IMapper mapper;
+        internal IConfiguration config;
 
-        public DriverAdService(IDriverAdRepository driverAdRepository)
+        public DriverAdService(IDriverAdRepository driverAdRepository, IMapper mapper, IConfiguration config)
         {
             this.driverAdRepository = driverAdRepository;
+            this.mapper = mapper;
+            this.config = config;
         }
 
-        public async Task<DriverAd> CreateAsync(DriverAdForCreationDto driverAdDto)
+        public async Task<BaseResponse<DriverAd>> CreateAsync(DriverAdForCreationDto driverAdDto)
         {
-            DriverAd driverAd = new DriverAd()
-            {
-                Qayerdan = driverAdDto.Qayerdan,
-                Qayerga = driverAdDto.Qayerga,
-                Summa = driverAdDto.Summa,
-                Date = driverAdDto.Date,
-                Amenities = driverAdDto.Amenities,
-            };
+            BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
 
-            return await driverAdRepository.CreateAsync(driverAd);
+            DriverAd mappedDriverAd = mapper.Map<DriverAd>(driverAdDto);
+
+            DriverAd result = await driverAdRepository.CreateAsync(mappedDriverAd);
+
+            response.Data = result;
+
+            return response;
         }
 
         public async Task<bool> DeleteAsync(Expression<Func<DriverAd, bool>> pred)

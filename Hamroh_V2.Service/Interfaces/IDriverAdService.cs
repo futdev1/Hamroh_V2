@@ -1,4 +1,5 @@
 ﻿
+using Hamroh_V2.Domain.Commons;
 using Hamroh_V2.Domain.Entities.DriverAds;
 using Hamroh_V2.Service.DTOs.DriverAdDTO;
 using System;
@@ -10,7 +11,7 @@ namespace Hamroh_V2.Service.Interfaces
 {
     public interface IDriverAdService
     {
-        Task<DriverAd> CreateAsync(DriverAdForCreationDto driverAdDto);
+        Task<BaseResponse<DriverAd>> CreateAsync(DriverAdForCreationDto driverAdDto);
 
         Task<bool> DeleteAsync(Expression<Func<DriverAd, bool>> pred);
 
