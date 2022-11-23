@@ -38,34 +38,76 @@ namespace Hamroh_V2.Service.Services
             return response;
         }
 
-        public async Task<bool> DeleteAsync(Expression<Func<DriverAd, bool>> pred)
+        public async Task<BaseResponse<bool>> DeleteAsync(Expression<Func<DriverAd, bool>> pred)
         {
-            return await driverAdRepository.DeleteAsync(pred);
-        }
+            BaseResponse<bool> response = new BaseResponse<bool>();
 
-        public IEnumerable<DriverAd> GetAll(Expression<Func<DriverAd, bool>> pred)
-        {
-            return driverAdRepository.GetAll(pred);
-        }
+            DriverAd driverAd = await driverAdRepository.GetAsync(pred);
 
-        public async Task<DriverAd> GetAsync(Expression<Func<DriverAd, bool>> pred)
-        {
-            return await driverAdRepository.GetAsync(pred);
-        }
-
-        public async Task<DriverAd> UpdateAsync(long id, DriverAdForCreationDto driverAdDto)
-        {
-            DriverAd driverAd = await driverAdRepository.GetAsync(p => p.Id == id);
-            if (driverAd != null)
+            if(driverAd == null)
             {
-                driverAd.Qayerdan = driverAdDto.Qayerdan;
-                driverAd.Qayerga = driverAdDto.Qayerga;
-                driverAd.Summa = driverAdDto.Summa;
-                driverAd.Date = driverAdDto.Date;
-                driverAd.Amenities = driverAdDto.Amenities;
+                response.Error = new ErrorResponse(404, "Driver ad not found!");
+                return response;
             }
 
-            return await driverAdRepository.UpdateAsync(driverAd);
+            driverAd.Delete(); 
+            DriverAd result = await driverAdRepository.UpdateAsync(driverAd);
+
+            response.Data = true;
+            return response;
+        }
+
+        public BaseResponse<IEnumerable<DriverAd>> GetAll(Expression<Func<DriverAd, bool>> pred)
+        {
+            BaseResponse<IEnumerable<DriverAd>> response = new BaseResponse<IEnumerable<DriverAd>>();
+
+            var result = driverAdRepository.GetAll(pred);
+
+            response.Data = result;
+
+            return response;
+        }
+
+        public async Task<BaseResponse<DriverAd>> GetAsync(Expression<Func<DriverAd, bool>> pred)
+        {
+            BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
+
+            var driverAd = await driverAdRepository.GetAsync(pred);
+
+            if(driverAd == null)
+            {
+                response.Error = new ErrorResponse(404, "Driver ad not found");
+                return response;
+            }
+
+            response.Data = driverAd;
+
+            return response;
+        }
+
+        public async Task<BaseResponse<DriverAd>> UpdateAsync(long id, DriverAdForCreationDto driverAdDto)
+        {
+            BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
+
+            var driverAd = await driverAdRepository.GetAsync(p => p.Id == id);
+            
+            if(driverAd == null)
+            {
+                response.Error = new ErrorResponse(404, "Driver ad not found!");
+                return response;
+            }
+
+            driverAd.Qayerdan = driverAdDto.Qayerdan;
+            driverAd.Qayerga = driverAdDto.Qayerga;
+            driverAd.Summa = driverAdDto.Summa;
+            driverAd.Date = driverAdDto.Date;
+            driverAd.Amenities = driverAdDto.Amenities;
+            driverAd.Comment = driverAdDto.Comment;
+            driverAd.DriverId = driverAdDto.DriverId;
+
+            response.Data = driverAd;
+
+            return response;
         }
     }
 }

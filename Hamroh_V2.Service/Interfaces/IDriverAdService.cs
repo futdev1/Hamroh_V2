@@ -13,12 +13,12 @@ namespace Hamroh_V2.Service.Interfaces
     {
         Task<BaseResponse<DriverAd>> CreateAsync(DriverAdForCreationDto driverAdDto);
 
-        Task<bool> DeleteAsync(Expression<Func<DriverAd, bool>> pred);
+        Task<BaseResponse<bool>> DeleteAsync(Expression<Func<DriverAd, bool>> pred);
 
-        IEnumerable<DriverAd> GetAll(Expression<Func<DriverAd, bool>> pred);
+        BaseResponse<IEnumerable<DriverAd>> GetAll(Expression<Func<DriverAd, bool>> pred);
 
-        Task<DriverAd> GetAsync(Expression<Func<DriverAd, bool>> pred);
+        Task<BaseResponse<DriverAd>> GetAsync(Expression<Func<DriverAd, bool>> pred);
 
-        Task<DriverAd> UpdateAsync(long id, DriverAdForCreationDto client);
+        Task<BaseResponse<DriverAd>> UpdateAsync(long id, DriverAdForCreationDto client);
     }
 }

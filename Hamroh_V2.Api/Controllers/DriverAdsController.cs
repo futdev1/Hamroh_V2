@@ -27,27 +27,40 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<DriverAd>> GetAsync(long id)
+        public async Task<ActionResult<BaseResponse<DriverAd>>> GetAsync(long id)
         {
-            return await driverAdService.GetAsync(p => p.Id == id);
+            var result = await driverAdService.GetAsync(p => p.Id == id);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpGet]
-        public IEnumerable<DriverAd> GetAll(long id)
+        public ActionResult<BaseResponse<IEnumerable<DriverAd>>> GetAll(long? id)
         {
-            return driverAdService.GetAll(p => p.Id > id);
+            if(id == null)
+            {
+                var result = driverAdService.GetAll(null);
+                return StatusCode(result.Code ?? result.Error.Code.Value, result);
+            }
+
+            else
+            {
+                var result = driverAdService.GetAll(p => p.Id > id);
+                return StatusCode(result.Code ?? result.Error.Code.Value); 
+            }
         }
 
         [HttpDelete]
-        public async Task<ActionResult<bool>> DeleteAsync(long id)
+        public async Task<ActionResult<BaseResponse<bool>>> DeleteAsync(long id)
         {
-            return await driverAdService.DeleteAsync(p => p.Id == id);
+            var result = await driverAdService.DeleteAsync(p => p.Id == id);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpPut]
-        public async Task<ActionResult<DriverAd>> UpdateAsync(long id, DriverAdForCreationDto driverAdDto)
+        public async Task<ActionResult<BaseResponse<DriverAd>>> UpdateAsync(long id, DriverAdForCreationDto driverAdDto)
         {
-            return await driverAdService.UpdateAsync(id, driverAdDto);
+            var result = await driverAdService.UpdateAsync(id, driverAdDto);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
     }
 }
