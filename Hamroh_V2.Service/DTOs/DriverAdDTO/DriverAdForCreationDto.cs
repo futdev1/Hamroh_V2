@@ -24,5 +24,8 @@ namespace Hamroh_V2.Service.DTOs.DriverAdDTO
         public string Amenities { get; set; }
 
         public string Comment { get; set; }
+
+        [Required]
+        public long DriverId { get; set; }
     }
 }
