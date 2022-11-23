@@ -17,9 +17,9 @@ namespace Hamroh_V2.Domain.Entities.Drivers
 
         public string CarName { get; set; }
 
-        public DateTime CreatedAt { get;  set; }
-        public DateTime DeletedAt { get;  set; }
-        public DateTime UpdatedAt { get;  set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime DeletedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public ItemState State { get; set; }
 
         public void Create()

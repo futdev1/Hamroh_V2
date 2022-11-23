@@ -3,9 +3,7 @@ using Hamroh_V2.Domain.Entities.DriverAds;
 using Hamroh_V2.Service.DTOs.DriverAdDTO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hamroh_V2.Service.Interfaces

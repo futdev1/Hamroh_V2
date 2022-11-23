@@ -4,7 +4,6 @@ using Hamroh_V2.Service.DTOs.DriverDTO;
 using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hamroh_V2.Api.Controllers
@@ -49,6 +48,7 @@ namespace Hamroh_V2.Api.Controllers
         public async Task<ActionResult<Driver>> UpdateAsync(long id, DriverForCreationDto driverDto)
         {
             return await driverService.UpdateAsync(id, driverDto);
-;        }
+            ;
+        }
     }
 }

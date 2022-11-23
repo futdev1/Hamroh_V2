@@ -36,11 +36,11 @@ namespace Hamroh_V2.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hamroh_V2.Api", Version = "v1" });
             });
 
-            
-
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddAutoMapper(typeof(MappingProfile));
+
+            #region registration of services and repositories
 
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IClientRepository, ClientRepository>();
@@ -53,6 +53,7 @@ namespace Hamroh_V2.Api
 
             services.AddScoped<IClientAdService, ClientAdService>();
             services.AddScoped<IClientAdRepository, ClientAdRepository>();
+            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

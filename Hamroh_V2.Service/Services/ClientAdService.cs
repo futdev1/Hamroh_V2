@@ -24,7 +24,7 @@ namespace Hamroh_V2.Service.Services
             this.mapper = mapper;
             this.config = config;
         }
-   
+
         public async Task<BaseResponse<ClientAd>> CreateAsync(ClientAdForCreationDto clientAdDto)
         {
             BaseResponse<ClientAd> response = new BaseResponse<ClientAd>();
@@ -36,7 +36,7 @@ namespace Hamroh_V2.Service.Services
 
             response.Data = clientAd;
 
-            return response;   
+            return response;
         }
 
         public async Task<BaseResponse<bool>> DeleteAsync(Expression<Func<ClientAd, bool>> pred)
@@ -45,7 +45,7 @@ namespace Hamroh_V2.Service.Services
 
             ClientAd clientAd = await clientAdRepository.GetAsync(pred);
 
-            if(clientAd == null)
+            if (clientAd == null)
             {
                 response.Error = new ErrorResponse(404, "Client Ad not found!");
                 return response;
@@ -94,7 +94,7 @@ namespace Hamroh_V2.Service.Services
 
             ClientAd clientAd = await clientAdRepository.GetAsync(p => p.Id == id);
 
-            if(clientAd == null)
+            if (clientAd == null)
             {
                 response.Error = new ErrorResponse(404, "Client Ad not found!");
                 return response;
@@ -104,7 +104,7 @@ namespace Hamroh_V2.Service.Services
             clientAd.Qayerga = clientAdDto.Qayerga;
             clientAd.PeopleCount = clientAdDto.PeopleCount;
             clientAd.Summa = clientAdDto.Summa;
-            clientAd.ClientId = clientAdDto.ClientId; 
+            clientAd.ClientId = clientAdDto.ClientId;
             clientAd.Date = clientAdDto.Date;
             clientAd.Comment = clientAdDto.Comment;
 
@@ -115,6 +115,6 @@ namespace Hamroh_V2.Service.Services
             response.Data = result;
 
             return response;
-        } 
+        }
     }
 }

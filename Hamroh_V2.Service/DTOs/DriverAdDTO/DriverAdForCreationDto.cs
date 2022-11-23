@@ -1,7 +1,4 @@
-﻿using Hamroh_V2.Domain.Entities.Drivers;
-using Hamroh_V2.Service.DTOs.DriverDTO;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Hamroh_V2.Service.DTOs.DriverAdDTO

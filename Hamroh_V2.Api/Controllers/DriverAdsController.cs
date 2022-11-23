@@ -1,10 +1,8 @@
 ﻿using Hamroh_V2.Domain.Entities.DriverAds;
-using Hamroh_V2.Domain.Entities.Drivers;
 using Hamroh_V2.Service.DTOs.DriverAdDTO;
 using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hamroh_V2.Api.Controllers

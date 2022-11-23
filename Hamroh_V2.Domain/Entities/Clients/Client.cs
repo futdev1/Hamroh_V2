@@ -14,7 +14,7 @@ namespace Hamroh_V2.Domain.Entities.Clients
         public DateTime CreatedAt { get; private set; }
         public DateTime DeletedAt { get; private set; }
         public ItemState State { get; private set; }
-        public DateTime UpdatedAt { get;  set; }
+        public DateTime UpdatedAt { get; set; }
 
         public void Update()
         {

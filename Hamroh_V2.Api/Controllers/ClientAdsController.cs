@@ -14,13 +14,13 @@ namespace Hamroh_V2.Api.Controllers
     {
         private IClientAdService clientAdService;
 
+        //Constructor
         public ClientAdsController(IClientAdService clientAdService)
         {
             this.clientAdService = clientAdService;
         }
 
         [HttpPost]
-
         public async Task<ActionResult<BaseResponse<ClientAd>>> CreateAsync([FromForm] ClientAdForCreationDto clientAdDto)
         {
             var result = await clientAdService.CreateAsync(clientAdDto);
@@ -42,6 +42,28 @@ namespace Hamroh_V2.Api.Controllers
                 var result = clientAdService.GetAll(null);
                 return StatusCode(result.Code ?? result.Error.Code.Value, result);
             }
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<BaseResponse<bool>>> DeleteAsync([FromRoute] long id)
+        {
+            var result = await clientAdService.DeleteAsync(p => p.Id == id);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<BaseResponse<ClientAd>>> GetAsync([FromRoute] long id)
+        {
+            var result = await clientAdService.GetAsync(p => p.Id == id);
+
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<BaseResponse<ClientAd>>> UpdateAsync(long id, ClientAdForCreationDto cliendAdDto)
+        {
+            var result = await clientAdService.UpdateAsync(id, cliendAdDto);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
     }
 }

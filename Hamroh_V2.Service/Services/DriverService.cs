@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -25,13 +24,13 @@ namespace Hamroh_V2.Service.Services
         public DriverService(IDriverRepository driverRepository, IMapper mapper, IWebHostEnvironment env)
         {
             this.driverRepository = driverRepository;
-            this.mapper = mapper;   
+            this.mapper = mapper;
             this.env = env;
         }
         public async Task<BaseResponse<Driver>> CreateAsync(DriverForCreationDto driverDto)
         {
             BaseResponse<Driver> response = new BaseResponse<Driver>();
-            
+
             Driver mappedDriver = mapper.Map<Driver>(driverDto);
 
             mappedDriver.CarImage = await SaveFileAsync(driverDto.CarImage.OpenReadStream(), driverDto.CarImage.FileName);
@@ -66,7 +65,7 @@ namespace Hamroh_V2.Service.Services
         {
             var driver = await driverRepository.GetAsync(p => p.Id == id);
 
-            if(driver != null)
+            if (driver != null)
             {
                 driver.FullName = driverDto.FullName;
                 driver.PhoneNumber = driverDto.PhoneNumber;

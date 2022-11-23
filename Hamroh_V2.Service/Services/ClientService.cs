@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -31,13 +30,13 @@ namespace Hamroh_V2.Service.Services
 
         public async Task<BaseResponse<Client>> CreateAsync(ClientForCreationDto clientDto)
         {
-            BaseResponse <Client> response = new BaseResponse<Client>();
+            BaseResponse<Client> response = new BaseResponse<Client>();
 
             Client mappedClient = mapper.Map<Client>(clientDto);
 
             mappedClient.Create();
 
-            Client result  = await clientRepository.CreateAsync(mappedClient);
+            Client result = await clientRepository.CreateAsync(mappedClient);
 
             response.Data = result;
 
@@ -85,7 +84,7 @@ namespace Hamroh_V2.Service.Services
 
             Client client = await clientRepository.GetAsync(pred);
 
-            if(client == null)
+            if (client == null)
             {
                 response.Error = new ErrorResponse(404, "Client not found");
                 return response;
@@ -102,7 +101,7 @@ namespace Hamroh_V2.Service.Services
 
             Client client = await clientRepository.GetAsync(p => p.Id == id);
 
-            if(client == null)
+            if (client == null)
             {
                 response.Error = new ErrorResponse(404, "Client not found");
                 return response;

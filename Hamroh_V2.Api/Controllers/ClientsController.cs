@@ -5,7 +5,6 @@ using Hamroh_V2.Service.DTOs.ClientDTO;
 using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hamroh_V2.Api.Controllers
@@ -24,13 +23,13 @@ namespace Hamroh_V2.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<BaseResponse<Client>>> CreateAsync([FromForm] ClientForCreationDto clientDto)
         {
-            var result =  await clientService.CreateAsync(clientDto);
+            var result = await clientService.CreateAsync(clientDto);
             return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<BaseResponse<bool>>> DeleteAsync([FromRoute] long id)
-        { 
+        {
             var result = await clientService.DeleteAsync(p => p.Id == id && p.State != ItemState.Deleted);
             return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
@@ -56,7 +55,7 @@ namespace Hamroh_V2.Api.Controllers
                 var results = clientService.GetAll(null);
                 return StatusCode(results.Code ?? results.Error.Code.Value, results);
             }
-          
+
         }
 
         [HttpPut("{id}")]

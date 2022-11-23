@@ -1,5 +1,4 @@
-﻿using Hamroh_V2.Domain.Entities.Drivers;
-using Hamroh_V2.Domain.Enums;
+﻿using Hamroh_V2.Domain.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

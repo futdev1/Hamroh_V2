@@ -1,14 +1,10 @@
 ﻿using Hamroh_V2.Data.IRepositories;
 using Hamroh_V2.Domain.Entities.DriverAds;
-using Hamroh_V2.Domain.Entities.Drivers;
 using Hamroh_V2.Service.DTOs.DriverAdDTO;
-using Hamroh_V2.Service.DTOs.DriverDTO;
 using Hamroh_V2.Service.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hamroh_V2.Service.Services
@@ -48,16 +44,16 @@ namespace Hamroh_V2.Service.Services
 
         public async Task<DriverAd> GetAsync(Expression<Func<DriverAd, bool>> pred)
         {
-            return await driverAdRepository.GetAsync(pred); 
+            return await driverAdRepository.GetAsync(pred);
         }
 
         public async Task<DriverAd> UpdateAsync(long id, DriverAdForCreationDto driverAdDto)
         {
             DriverAd driverAd = await driverAdRepository.GetAsync(p => p.Id == id);
-            if(driverAd != null)
+            if (driverAd != null)
             {
                 driverAd.Qayerdan = driverAdDto.Qayerdan;
-                driverAd .Qayerga = driverAdDto.Qayerga;
+                driverAd.Qayerga = driverAdDto.Qayerga;
                 driverAd.Summa = driverAdDto.Summa;
                 driverAd.Date = driverAdDto.Date;
                 driverAd.Amenities = driverAdDto.Amenities;
