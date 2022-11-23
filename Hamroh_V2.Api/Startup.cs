@@ -50,6 +50,9 @@ namespace Hamroh_V2.Api
 
             services.AddScoped<IDriverService, DriverService>();
             services.AddScoped<IDriverRepository, DriverRepository>();
+
+            services.AddScoped<IClientAdService, ClientAdService>();
+            services.AddScoped<IClientAdRepository, ClientAdRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -43,7 +43,7 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<BaseResponse<IEnumerable<Client>>> GetAllAsync([FromQuery] long? id)
+        public ActionResult<BaseResponse<IEnumerable<Client>>> GetAll([FromQuery] long? id)
         {
             if (id != null)
             {
