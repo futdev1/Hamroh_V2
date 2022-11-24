@@ -73,6 +73,7 @@ namespace Hamroh_V2.Api
                 HttpContextHelper.Accessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
             }
 
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
