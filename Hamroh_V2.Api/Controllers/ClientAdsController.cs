@@ -1,4 +1,5 @@
 ﻿using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Configurations;
 using Hamroh_V2.Domain.Entities.ClientAds;
 using Hamroh_V2.Service.DTOs.ClientAdDTO;
 using Hamroh_V2.Service.Interfaces;
@@ -29,19 +30,10 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<BaseResponse<IEnumerable<ClientAd>>> GetAll([FromQuery] long? id)
+        public ActionResult<BaseResponse<IEnumerable<ClientAd>>> GetAll([FromQuery] PaginationParameters? parameters = null)
         {
-            if (id != null)
-            {
-                var result = clientAdService.GetAll(p => p.Id > id);
-                return StatusCode(result.Code ?? result.Error.Code.Value, result);
-            }
-
-            else
-            {
-                var result = clientAdService.GetAll(null);
-                return StatusCode(result.Code ?? result.Error.Code.Value, result);
-            }
+            var result = clientAdService.GetAll(null, parameters);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpDelete]

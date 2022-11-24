@@ -11,10 +11,10 @@ namespace Hamroh_V2.Service.DTOs.DriverDTO
         [Required]
         public string PhoneNumber { get; set; }
 
-        //[Required]
+        [Required]
         public IFormFile CarImage { get; set; }
 
-        //[Required]
+        [Required]
         public IFormFile DriverImage { get; set; }
 
         [Required]

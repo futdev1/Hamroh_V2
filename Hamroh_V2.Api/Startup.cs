@@ -1,11 +1,13 @@
 using Hamroh_V2.Data.Contexts;
 using Hamroh_V2.Data.IRepositories;
 using Hamroh_V2.Data.Repositories;
+using Hamroh_V2.Service.Helpers;
 using Hamroh_V2.Service.Interfaces;
 using Hamroh_V2.Service.Mappers;
 using Hamroh_V2.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +39,7 @@ namespace Hamroh_V2.Api
             });
 
             services.AddControllers().AddNewtonsoftJson();
+            services.AddHttpContextAccessor();
 
             services.AddAutoMapper(typeof(MappingProfile));
 
@@ -63,6 +66,11 @@ namespace Hamroh_V2.Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hamroh_V2.Api v1"));
+            }
+
+            if (app.ApplicationServices.GetService<IHttpContextAccessor>() != null)
+            {
+                HttpContextHelper.Accessor = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
             }
 
             app.UseHttpsRedirection();
