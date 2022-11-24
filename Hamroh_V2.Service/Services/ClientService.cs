@@ -18,13 +18,12 @@ namespace Hamroh_V2.Service.Services
         internal IClientRepository clientRepository;
         internal IConfiguration config;
         internal IMapper mapper;
-        internal IWebHostEnvironment env;
 
-        public ClientService(IClientRepository clientRepository, IConfiguration config, IWebHostEnvironment env, IMapper mapper)
+        //Constructor
+        public ClientService(IClientRepository clientRepository, IConfiguration config, IMapper mapper)
         {
             this.clientRepository = clientRepository;
             this.config = config;
-            this.env = env;
             this.mapper = mapper;
         }
 

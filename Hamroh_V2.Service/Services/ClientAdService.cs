@@ -18,6 +18,7 @@ namespace Hamroh_V2.Service.Services
         private IConfiguration config;
         private IClientAdRepository clientAdRepository;
 
+        //Constructor
         public ClientAdService(IClientAdRepository clientAdRepository, IMapper mapper, IConfiguration config)
         {
             this.clientAdRepository = clientAdRepository;

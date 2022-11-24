@@ -18,6 +18,7 @@ namespace Hamroh_V2.Service.Services
         internal IMapper mapper;
         internal IConfiguration config;
 
+        //Constructor
         public DriverAdService(IDriverAdRepository driverAdRepository, IMapper mapper, IConfiguration config)
         {
             this.driverAdRepository = driverAdRepository;
