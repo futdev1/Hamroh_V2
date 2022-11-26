@@ -1,3 +1,4 @@
+using Hamroh_V2.Api.Extensions;
 using Hamroh_V2.Data.Contexts;
 using Hamroh_V2.Data.IRepositories;
 using Hamroh_V2.Data.Repositories;
@@ -41,22 +42,9 @@ namespace Hamroh_V2.Api
             services.AddControllers().AddNewtonsoftJson();
             services.AddHttpContextAccessor();
 
+            services.AddCustomServices();
+
             services.AddAutoMapper(typeof(MappingProfile));
-
-            #region registration of services and repositories
-
-            services.AddScoped<IClientService, ClientService>();
-            services.AddScoped<IClientRepository, ClientRepository>();
-
-            services.AddScoped<IDriverAdService, DriverAdService>();
-            services.AddScoped<IDriverAdRepository, DriverAdRepository>();
-
-            services.AddScoped<IDriverService, DriverService>();
-            services.AddScoped<IDriverRepository, DriverRepository>();
-
-            services.AddScoped<IClientAdService, ClientAdService>();
-            services.AddScoped<IClientAdRepository, ClientAdRepository>();
-            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

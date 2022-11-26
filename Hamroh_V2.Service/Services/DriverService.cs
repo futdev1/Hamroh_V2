@@ -22,11 +22,12 @@ namespace Hamroh_V2.Service.Services
         internal IWebHostEnvironment env;
 
         //Constuctor
-        public DriverService(IDriverRepository driverRepository, IMapper mapper, IWebHostEnvironment env)
+        public DriverService(IDriverRepository driverRepository, IMapper mapper, IWebHostEnvironment env,IConfiguration configuration)
         {
             this.driverRepository = driverRepository;
             this.mapper = mapper;
             this.env = env;
+            config = configuration;
         }
        
         public async Task<BaseResponse<Driver>> CreateAsync(DriverForCreationDto driverDto)

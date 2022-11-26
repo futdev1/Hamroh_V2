@@ -21,11 +21,11 @@ namespace Hamroh_V2.Data.Repositories
         }
         public async Task<T> CreateAsync(T entity)
         {
-            EntityEntry entry = await _dbContext.AddAsync(entity);
+            T result = (await _dbContext.AddAsync(entity)).Entity;
 
             await _dbContext.SaveChangesAsync();
 
-            return (T)entry.Entity;
+            return result;
         }
 
         public async Task<bool> DeleteAsync(Expression<Func<T, bool>> predicate)
