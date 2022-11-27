@@ -16,15 +16,13 @@ namespace Hamroh_V2.Service.Services
     public class ClientService : IClientService
     {
         private IUnitOfWork unitOfWork;
-        private IClientRepository clientRepository;
         private IConfiguration config;
         private IMapper mapper;
 
         //Constructor
-        public ClientService(IUnitOfWork unitOfWork, IClientRepository clientRepository, IConfiguration config, IMapper mapper)
+        public ClientService(IUnitOfWork unitOfWork, IConfiguration config, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
-            this.clientRepository = clientRepository;
             this.config = config;
             this.mapper = mapper;
         }
@@ -58,7 +56,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<bool> response = new BaseResponse<bool>();
 
-            Client client = await clientRepository.GetAsync(pred);
+            Client client = await unitOfWork.Clients.GetAsync(pred);
 
             if (client == null)
             {
@@ -70,7 +68,7 @@ namespace Hamroh_V2.Service.Services
             {
                 client.Delete();
 
-                Client result = await clientRepository.UpdateAsync(client);
+                Client result = await unitOfWork.Clients.UpdateAsync(client);
 
                 response.Data = true;
 
@@ -87,7 +85,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<IEnumerable<Client>> response = new BaseResponse<IEnumerable<Client>>();
 
-            IEnumerable<Client> result = clientRepository.GetAll(pred);
+            IEnumerable<Client> result = unitOfWork.Clients.GetAll(pred);
 
             response.Data = result;
 
@@ -132,7 +130,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<Client> response = new BaseResponse<Client>();
 
-            Client client = await clientRepository.GetAsync(p => p.Id == id);
+            Client client = await unitOfWork.Clients.GetAsync(p => p.Id == id);
 
             if (client == null)
             {
@@ -146,7 +144,7 @@ namespace Hamroh_V2.Service.Services
                 client.PhoneNumber = clientDto.PhoneNumber;
                 client.Update();
 
-                Client result = await clientRepository.UpdateAsync(client);
+                Client result = await unitOfWork.Clients.UpdateAsync(client);
 
                 response.Data = result;
 

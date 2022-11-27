@@ -14,14 +14,14 @@ namespace Hamroh_V2.Service.Services
 {
     public class DriverAdService : IDriverAdService
     {
-        internal IDriverAdRepository driverAdRepository;
-        internal IMapper mapper;
-        internal IConfiguration config;
+        private IUnitOfWork unitOfWork;
+        private IMapper mapper;
+        private IConfiguration config;
 
         //Constructor
-        public DriverAdService(IDriverAdRepository driverAdRepository, IMapper mapper, IConfiguration config)
+        public DriverAdService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration config)
         {
-            this.driverAdRepository = driverAdRepository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.config = config;
         }
@@ -37,7 +37,7 @@ namespace Hamroh_V2.Service.Services
 
             DriverAd mappedDriverAd = mapper.Map<DriverAd>(driverAdDto);
 
-            DriverAd result = await driverAdRepository.CreateAsync(mappedDriverAd);
+            DriverAd result = await unitOfWork.DriverAds.CreateAsync(mappedDriverAd);
 
             response.Data = result;
 
@@ -53,7 +53,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<bool> response = new BaseResponse<bool>();
 
-            DriverAd driverAd = await driverAdRepository.GetAsync(pred);
+            DriverAd driverAd = await unitOfWork.DriverAds.GetAsync(pred);
 
             if(driverAd == null)
             {
@@ -62,7 +62,7 @@ namespace Hamroh_V2.Service.Services
             }
 
             driverAd.Delete(); 
-            DriverAd result = await driverAdRepository.UpdateAsync(driverAd);
+            DriverAd result = await unitOfWork.DriverAds.UpdateAsync(driverAd);
 
             response.Data = true;
             return response;
@@ -77,7 +77,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<IEnumerable<DriverAd>> response = new BaseResponse<IEnumerable<DriverAd>>();
 
-            var result = driverAdRepository.GetAll(pred);
+            var result = unitOfWork.DriverAds.GetAll(pred);
 
             response.Data = result;
 
@@ -93,7 +93,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
 
-            var driverAd = await driverAdRepository.GetAsync(pred);
+            var driverAd = await unitOfWork.DriverAds.GetAsync(pred);
 
             if(driverAd == null)
             {
@@ -116,7 +116,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
 
-            var driverAd = await driverAdRepository.GetAsync(p => p.Id == id);
+            var driverAd = await unitOfWork.DriverAds.GetAsync(p => p.Id == id);
             
             if(driverAd == null)
             {

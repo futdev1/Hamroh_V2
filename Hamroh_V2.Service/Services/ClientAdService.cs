@@ -18,18 +18,16 @@ namespace Hamroh_V2.Service.Services
 {
     public class ClientAdService : IClientAdService
     {
+        private IUnitOfWork unitOfWork;
         private IMapper mapper;
         private IConfiguration config;
-        private IClientAdRepository clientAdRepository;
-        private IUnitOfWork unitOfWork;
 
         //Constructor
-        public ClientAdService(IClientAdRepository clientAdRepository, IMapper mapper, IConfiguration config, IUnitOfWork unitOfWork)
+        public ClientAdService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration config)
         {
-            this.clientAdRepository = clientAdRepository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.config = config;
-            this.unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -60,7 +58,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<bool> response = new BaseResponse<bool>();
 
-            ClientAd clientAd = await clientAdRepository.GetAsync(pred);
+            ClientAd clientAd = await unitOfWork.ClientAds.GetAsync(pred);
 
             if (clientAd == null)
             {
@@ -70,7 +68,7 @@ namespace Hamroh_V2.Service.Services
 
             clientAd.Delete();
 
-            ClientAd result = await clientAdRepository.UpdateAsync(clientAd);
+            ClientAd result = await unitOfWork.ClientAds.UpdateAsync(clientAd);
 
             response.Data = true;
 
@@ -86,7 +84,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<IEnumerable<ClientAd>> response = new BaseResponse<IEnumerable<ClientAd>>();
 
-            IEnumerable<ClientAd> clientAds = clientAdRepository.GetAll(pred).Where(p => p.State != ItemState.Deleted).ToPagedAsEnumerable(parameters);
+            IEnumerable<ClientAd> clientAds = unitOfWork.ClientAds.GetAll(pred).Where(p => p.State != ItemState.Deleted).ToPagedAsEnumerable(parameters);
 
             response.Data = clientAds;
 
@@ -102,7 +100,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<ClientAd> response = new BaseResponse<ClientAd>();
 
-            ClientAd clientAd = await clientAdRepository.GetAsync(pred);
+            ClientAd clientAd = await unitOfWork.ClientAds.GetAsync(pred);
 
             if (clientAd == null)
             {
@@ -125,7 +123,7 @@ namespace Hamroh_V2.Service.Services
         {
             BaseResponse<ClientAd> response = new BaseResponse<ClientAd>();
 
-            ClientAd clientAd = await clientAdRepository.GetAsync(p => p.Id == id);
+            ClientAd clientAd = await unitOfWork.ClientAds.GetAsync(p => p.Id == id);
 
             if (clientAd == null)
             {
@@ -143,7 +141,7 @@ namespace Hamroh_V2.Service.Services
 
             clientAd.Update();
 
-            ClientAd result = await clientAdRepository.UpdateAsync(clientAd);
+            ClientAd result = await unitOfWork.ClientAds.UpdateAsync(clientAd);
 
             response.Data = result;
 

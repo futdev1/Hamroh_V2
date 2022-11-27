@@ -16,18 +16,18 @@ namespace Hamroh_V2.Service.Services
 {
     public class DriverService : IDriverService
     {
-        internal IDriverRepository driverRepository;
-        internal IMapper mapper;
-        internal IConfiguration config;
-        internal IWebHostEnvironment env;
+        private IUnitOfWork unitOfWork;
+        private IMapper mapper;
+        private IConfiguration config;
+        private IWebHostEnvironment env;
 
         //Constuctor
-        public DriverService(IDriverRepository driverRepository, IMapper mapper, IWebHostEnvironment env,IConfiguration configuration)
+        public DriverService(IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment env,IConfiguration config)
         {
-            this.driverRepository = driverRepository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.env = env;
-            config = configuration;
+            this.config = config;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Hamroh_V2.Service.Services
             mappedDriver.CarImage = await SaveFileAsync(driverDto.CarImage.OpenReadStream(), driverDto.CarImage.FileName);
             mappedDriver.DriverImage = await SaveFileAsync(driverDto.DriverImage.OpenReadStream(), driverDto.DriverImage.FileName);
 
-            Driver result = await driverRepository.CreateAsync(mappedDriver);
+            Driver result = await unitOfWork.Drivers.CreateAsync(mappedDriver);
 
             result.CarImage = "https://localhost:5001/Images/" + result.CarImage;
             result.DriverImage = "https://localhost:5001/Images/" + result.DriverImage;
@@ -61,7 +61,7 @@ namespace Hamroh_V2.Service.Services
         /// <returns></returns>
         public async Task<bool> DeleteAsync(Expression<Func<Driver, bool>> pred)
         {
-            return await driverRepository.DeleteAsync(pred);
+            return await unitOfWork.Drivers.DeleteAsync(pred);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Hamroh_V2.Service.Services
         /// <returns></returns>
         public IEnumerable<Driver> GetAll(Expression<Func<Driver, bool>> pred = null)
         {
-            return driverRepository.GetAll(pred);
+            return unitOfWork.Drivers.GetAll(pred);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Hamroh_V2.Service.Services
         /// <returns></returns>
         public async Task<Driver> GetAsync(Expression<Func<Driver, bool>> pred)
         {
-            return await driverRepository.GetAsync(pred);
+            return await unitOfWork.Drivers.GetAsync(pred);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Hamroh_V2.Service.Services
         /// <returns></returns>
         public async Task<Driver> UpdateAsync(long id, DriverForCreationDto driverDto)
         {
-            var driver = await driverRepository.GetAsync(p => p.Id == id);
+            var driver = await unitOfWork.Drivers.GetAsync(p => p.Id == id);
 
             if (driver != null)
             {
@@ -102,7 +102,7 @@ namespace Hamroh_V2.Service.Services
                 //driver.CarImage = driverDto.CarImage;
                 //driver.DriverImage = driverDto.DriverImage;
             }
-            return await driverRepository.UpdateAsync(driver);
+            return await unitOfWork.Drivers.UpdateAsync(driver);
         }
 
         /// <summary>
