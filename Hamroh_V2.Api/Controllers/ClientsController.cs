@@ -35,7 +35,7 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BaseResponse<Client>>> GetAsync([FromRoute] long id)
+        public async Task<ActionResult<BaseResponse<ClientForGetDto>>> GetAsync([FromRoute] long id)
         {
             var result = await clientService.GetAsync(p => p.Id == id);
             return StatusCode(result.Code ?? result.Error.Code.Value, result);

@@ -16,7 +16,7 @@ namespace Hamroh_V2.Service.Interfaces
 
         BaseResponse<IEnumerable<Client>> GetAll(Expression<Func<Client, bool>> pred);
 
-        Task<BaseResponse<Client>> GetAsync(Expression<Func<Client, bool>> pred);
+        Task<BaseResponse<ClientForGetDto>> GetAsync(Expression<Func<Client, bool>> pred);
 
         Task<BaseResponse<Client>> UpdateAsync(long id, ClientForCreationDto client);
     }

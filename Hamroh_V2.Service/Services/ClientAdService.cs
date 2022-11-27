@@ -21,13 +21,15 @@ namespace Hamroh_V2.Service.Services
         private IMapper mapper;
         private IConfiguration config;
         private IClientAdRepository clientAdRepository;
+        private IUnitOfWork unitOfWork;
 
         //Constructor
-        public ClientAdService(IClientAdRepository clientAdRepository, IMapper mapper, IConfiguration config)
+        public ClientAdService(IClientAdRepository clientAdRepository, IMapper mapper, IConfiguration config, IUnitOfWork unitOfWork)
         {
             this.clientAdRepository = clientAdRepository;
             this.mapper = mapper;
             this.config = config;
+            this.unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace Hamroh_V2.Service.Services
             ClientAd clientAdMapped = mapper.Map<ClientAd>(clientAdDto);
             clientAdMapped.Create();
 
-            ClientAd clientAd = await clientAdRepository.CreateAsync(clientAdMapped);
+            ClientAd clientAd = await unitOfWork.ClientAds.CreateAsync(clientAdMapped);
 
             response.Data = clientAd;
 
@@ -50,7 +52,7 @@ namespace Hamroh_V2.Service.Services
         }
 
         /// <summary>
-        /// 
+        /// this is used to delete unnecessary data from the database
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
@@ -76,7 +78,7 @@ namespace Hamroh_V2.Service.Services
         }
 
         /// <summary>
-        /// 
+        /// We use it to get the necessary all information from the database
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
@@ -92,7 +94,7 @@ namespace Hamroh_V2.Service.Services
         }
 
         /// <summary>
-        /// 
+        /// We use it to get the necessary information from the database
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
@@ -114,7 +116,7 @@ namespace Hamroh_V2.Service.Services
         }
 
         /// <summary>
-        /// 
+        /// This is used to change the data from the database
         /// </summary>
         /// <param name="id"></param>
         /// <param name="clientAdDto"></param>

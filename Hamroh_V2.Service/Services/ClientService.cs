@@ -15,18 +15,25 @@ namespace Hamroh_V2.Service.Services
 {
     public class ClientService : IClientService
     {
-        internal IClientRepository clientRepository;
-        internal IConfiguration config;
-        internal IMapper mapper;
+        private IUnitOfWork unitOfWork;
+        private IClientRepository clientRepository;
+        private IConfiguration config;
+        private IMapper mapper;
 
         //Constructor
-        public ClientService(IClientRepository clientRepository, IConfiguration config, IMapper mapper)
+        public ClientService(IUnitOfWork unitOfWork, IClientRepository clientRepository, IConfiguration config, IMapper mapper)
         {
+            this.unitOfWork = unitOfWork;
             this.clientRepository = clientRepository;
             this.config = config;
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// The sectionthat stores data to the server
+        /// </summary>
+        /// <param name="clientDto"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<Client>> CreateAsync(ClientForCreationDto clientDto)
         {
             BaseResponse<Client> response = new BaseResponse<Client>();
@@ -35,13 +42,18 @@ namespace Hamroh_V2.Service.Services
 
             mappedClient.Create();
 
-            Client result = await clientRepository.CreateAsync(mappedClient);
+            Client result = await unitOfWork.Clients.CreateAsync(mappedClient);
 
             response.Data = result;
 
             return response;
         }
 
+        /// <summary>
+        /// this is used to delete unnecessary data from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<bool>> DeleteAsync(Expression<Func<Client, bool>> pred)
         {
             BaseResponse<bool> response = new BaseResponse<bool>();
@@ -66,6 +78,11 @@ namespace Hamroh_V2.Service.Services
             }
         }
 
+        /// <summary>
+        /// We use it to get the necessary all information from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
         public BaseResponse<IEnumerable<Client>> GetAll(Expression<Func<Client, bool>> pred = null)
         {
             BaseResponse<IEnumerable<Client>> response = new BaseResponse<IEnumerable<Client>>();
@@ -77,11 +94,22 @@ namespace Hamroh_V2.Service.Services
             return response;
         }
 
-        public async Task<BaseResponse<Client>> GetAsync(Expression<Func<Client, bool>> pred)
+        /// <summary>
+        /// We use it to get the necessary information from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
+        public async Task<BaseResponse<ClientForGetDto>> GetAsync(Expression<Func<Client, bool>> pred)
         {
-            BaseResponse<Client> response = new BaseResponse<Client>();
+            BaseResponse<ClientForGetDto> response = new BaseResponse<ClientForGetDto>();
 
-            Client client = await clientRepository.GetAsync(pred);
+            Client client = await unitOfWork.Clients.GetAsync(pred);
+
+            ClientForGetDto mappedClient = new ClientForGetDto()
+            {
+                FirstName = client.FirstName,
+                PhoneNumber = client.PhoneNumber,
+            };
 
             if (client == null)
             {
@@ -89,11 +117,17 @@ namespace Hamroh_V2.Service.Services
                 return response;
             }
 
-            response.Data = client;
+            response.Data = mappedClient;
 
             return response;
         }
 
+        /// <summary>
+        /// This is used to change the data from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="clientDto"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<Client>> UpdateAsync(long id, ClientForCreationDto clientDto)
         {
             BaseResponse<Client> response = new BaseResponse<Client>();

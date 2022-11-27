@@ -15,6 +15,7 @@ namespace Hamroh_V2.Api.Extensions
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IDriverAdRepository, DriverAdRepository>();
             services.AddScoped<IDriverRepository, DriverRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // services
             services.AddScoped<IClientService, ClientService>();
