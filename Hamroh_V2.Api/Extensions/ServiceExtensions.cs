@@ -10,11 +10,6 @@ namespace Hamroh_V2.Api.Extensions
     {
         public static void AddCustomServices(this IServiceCollection services)
         {
-            // repositories
-            services.AddScoped<IClientAdRepository, ClientAdRepository>();
-            services.AddScoped<IClientRepository, ClientRepository>();
-            services.AddScoped<IDriverAdRepository, DriverAdRepository>();
-            services.AddScoped<IDriverRepository, DriverRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // services
@@ -25,3 +20,4 @@ namespace Hamroh_V2.Api.Extensions
         }
     }
 }
+ 
