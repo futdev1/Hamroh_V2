@@ -29,7 +29,12 @@ namespace Hamroh_V2.Service.Services
             this.env = env;
             config = configuration;
         }
-       
+
+        /// <summary>
+        /// The sectionthat stores data to the server
+        /// </summary>
+        /// <param name="driverDto"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<Driver>> CreateAsync(DriverForCreationDto driverDto)
         {
             BaseResponse<Driver> response = new BaseResponse<Driver>();
@@ -49,21 +54,42 @@ namespace Hamroh_V2.Service.Services
             return response;
         }
 
+        /// <summary>
+        /// this is used to delete unnecessary data from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
         public async Task<bool> DeleteAsync(Expression<Func<Driver, bool>> pred)
         {
             return await driverRepository.DeleteAsync(pred);
         }
 
+        /// <summary>
+        /// We use it to get the necessary all information from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
         public IEnumerable<Driver> GetAll(Expression<Func<Driver, bool>> pred = null)
         {
             return driverRepository.GetAll(pred);
         }
 
+        /// <summary>
+        /// We use it to get the necessary information from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
         public async Task<Driver> GetAsync(Expression<Func<Driver, bool>> pred)
         {
             return await driverRepository.GetAsync(pred);
         }
 
+        /// <summary>
+        /// This is used to change the data from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="driverDto"></param>
+        /// <returns></returns>
         public async Task<Driver> UpdateAsync(long id, DriverForCreationDto driverDto)
         {
             var driver = await driverRepository.GetAsync(p => p.Id == id);
@@ -79,6 +105,12 @@ namespace Hamroh_V2.Service.Services
             return await driverRepository.UpdateAsync(driver);
         }
 
+        /// <summary>
+        /// This partition is used to store file data i.e. videos, images, etc
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public async Task<string> SaveFileAsync(Stream file, string fileName)
         {
             fileName = Guid.NewGuid().ToString("N") + "_" + fileName;

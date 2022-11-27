@@ -26,6 +26,11 @@ namespace Hamroh_V2.Service.Services
             this.config = config;
         }
 
+        /// <summary>
+        /// The sectionthat stores data to the server
+        /// </summary>
+        /// <param name="driverAdDto"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<DriverAd>> CreateAsync(DriverAdForCreationDto driverAdDto)
         {
             BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
@@ -39,6 +44,11 @@ namespace Hamroh_V2.Service.Services
             return response;
         }
 
+        /// <summary>
+        /// this is used to delete unnecessary data from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<bool>> DeleteAsync(Expression<Func<DriverAd, bool>> pred)
         {
             BaseResponse<bool> response = new BaseResponse<bool>();
@@ -58,6 +68,11 @@ namespace Hamroh_V2.Service.Services
             return response;
         }
 
+        /// <summary>
+        /// We use it to get the necessary all information from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
         public BaseResponse<IEnumerable<DriverAd>> GetAll(Expression<Func<DriverAd, bool>> pred)
         {
             BaseResponse<IEnumerable<DriverAd>> response = new BaseResponse<IEnumerable<DriverAd>>();
@@ -69,6 +84,11 @@ namespace Hamroh_V2.Service.Services
             return response;
         }
 
+        /// <summary>
+        /// We use it to get the necessary information from the database
+        /// </summary>
+        /// <param name="pred"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<DriverAd>> GetAsync(Expression<Func<DriverAd, bool>> pred)
         {
             BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
@@ -86,6 +106,12 @@ namespace Hamroh_V2.Service.Services
             return response;
         }
 
+        /// <summary>
+        /// This is used to change the data from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="driverAdDto"></param>
+        /// <returns></returns>
         public async Task<BaseResponse<DriverAd>> UpdateAsync(long id, DriverAdForCreationDto driverAdDto)
         {
             BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
