@@ -1,11 +1,7 @@
 using Hamroh_V2.Api.Extensions;
 using Hamroh_V2.Data.Contexts;
-using Hamroh_V2.Data.IRepositories;
-using Hamroh_V2.Data.Repositories;
 using Hamroh_V2.Service.Helpers;
-using Hamroh_V2.Service.Interfaces;
 using Hamroh_V2.Service.Mappers;
-using Hamroh_V2.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

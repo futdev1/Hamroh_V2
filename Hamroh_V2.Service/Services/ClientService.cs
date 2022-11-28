@@ -4,7 +4,6 @@ using Hamroh_V2.Domain.Commons;
 using Hamroh_V2.Domain.Entities.Clients;
 using Hamroh_V2.Service.DTOs.ClientDTO;
 using Hamroh_V2.Service.Interfaces;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

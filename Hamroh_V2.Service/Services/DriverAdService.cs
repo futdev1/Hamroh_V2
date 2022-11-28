@@ -55,13 +55,13 @@ namespace Hamroh_V2.Service.Services
 
             DriverAd driverAd = await unitOfWork.DriverAds.GetAsync(pred);
 
-            if(driverAd == null)
+            if (driverAd == null)
             {
                 response.Error = new ErrorResponse(404, "Driver ad not found!");
                 return response;
             }
 
-            driverAd.Delete(); 
+            driverAd.Delete();
             DriverAd result = await unitOfWork.DriverAds.UpdateAsync(driverAd);
 
             response.Data = true;
@@ -95,7 +95,7 @@ namespace Hamroh_V2.Service.Services
 
             var driverAd = await unitOfWork.DriverAds.GetAsync(pred);
 
-            if(driverAd == null)
+            if (driverAd == null)
             {
                 response.Error = new ErrorResponse(404, "Driver ad not found");
                 return response;
@@ -117,8 +117,8 @@ namespace Hamroh_V2.Service.Services
             BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
 
             var driverAd = await unitOfWork.DriverAds.GetAsync(p => p.Id == id);
-            
-            if(driverAd == null)
+
+            if (driverAd == null)
             {
                 response.Error = new ErrorResponse(404, "Driver ad not found!");
                 return response;

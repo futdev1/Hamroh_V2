@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hamroh_V2.Domain.Configurations
+﻿namespace Hamroh_V2.Domain.Configurations
 {
     public class PaginationParameters
     {

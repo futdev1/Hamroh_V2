@@ -11,8 +11,8 @@ namespace Hamroh_V2.Data.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        internal Hamroh_V2DbContext _dbContext;
-        internal DbSet<T> _dbSet;
+        private Hamroh_V2DbContext _dbContext;
+        private DbSet<T> _dbSet;
 
         public GenericRepository(Hamroh_V2DbContext dbContext)
         {

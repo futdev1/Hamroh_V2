@@ -36,7 +36,7 @@ namespace Hamroh_V2.Api.Controllers
         [HttpGet]
         public ActionResult<BaseResponse<IEnumerable<DriverAd>>> GetAll(long? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 var result = driverAdService.GetAll(null);
                 return StatusCode(result.Code ?? result.Error.Code.Value, result);
@@ -45,7 +45,7 @@ namespace Hamroh_V2.Api.Controllers
             else
             {
                 var result = driverAdService.GetAll(p => p.Id > id);
-                return StatusCode(result.Code ?? result.Error.Code.Value); 
+                return StatusCode(result.Code ?? result.Error.Code.Value);
             }
         }
 
