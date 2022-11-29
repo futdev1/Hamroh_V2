@@ -1,4 +1,5 @@
 ﻿using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Configurations;
 using Hamroh_V2.Domain.Entities.Drivers;
 using Hamroh_V2.Service.DTOs.DriverDTO;
 using System;
@@ -13,9 +14,9 @@ namespace Hamroh_V2.Service.Interfaces
     {
         Task<BaseResponse<Driver>> CreateAsync(DriverForCreationDto driverDto);
 
-        Task<bool> DeleteAsync(Expression<Func<Driver, bool>> pred);
+        Task<BaseResponse<bool>> DeleteAsync(Expression<Func<Driver, bool>> pred);
 
-        IEnumerable<Driver> GetAll(Expression<Func<Driver, bool>> pred = null);
+        BaseResponse<IEnumerable<Driver>> GetAll(Expression<Func<Driver, bool>> pred = null, PaginationParameters parameters = null);
 
         Task<Driver> GetAsync(Expression<Func<Driver, bool>> pred);
 

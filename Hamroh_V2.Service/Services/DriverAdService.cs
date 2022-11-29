@@ -36,6 +36,7 @@ namespace Hamroh_V2.Service.Services
             BaseResponse<DriverAd> response = new BaseResponse<DriverAd>();
 
             DriverAd mappedDriverAd = mapper.Map<DriverAd>(driverAdDto);
+            mappedDriverAd.Create();
 
             DriverAd result = await unitOfWork.DriverAds.CreateAsync(mappedDriverAd);
 

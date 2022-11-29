@@ -1,14 +1,18 @@
 ﻿using AutoMapper;
 using Hamroh_V2.Data.IRepositories;
 using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Configurations;
 using Hamroh_V2.Domain.Entities.Drivers;
+using Hamroh_V2.Domain.Enums;
 using Hamroh_V2.Service.DTOs.DriverDTO;
+using Hamroh_V2.Service.Extensions;
 using Hamroh_V2.Service.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -40,6 +44,7 @@ namespace Hamroh_V2.Service.Services
             BaseResponse<Driver> response = new BaseResponse<Driver>();
 
             Driver mappedDriver = mapper.Map<Driver>(driverDto);
+            mappedDriver.Create();
 
             mappedDriver.CarImage = await SaveFileAsync(driverDto.CarImage.OpenReadStream(), driverDto.CarImage.FileName);
             mappedDriver.DriverImage = await SaveFileAsync(driverDto.DriverImage.OpenReadStream(), driverDto.DriverImage.FileName);
@@ -59,9 +64,26 @@ namespace Hamroh_V2.Service.Services
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteAsync(Expression<Func<Driver, bool>> pred)
+        public async Task<BaseResponse<bool>> DeleteAsync(Expression<Func<Driver, bool>> pred)
         {
-            return await unitOfWork.Drivers.DeleteAsync(pred);
+            BaseResponse<bool> response = new BaseResponse<bool>();
+
+            var existDriver = await unitOfWork.Drivers.GetAsync(pred);
+
+            if(existDriver is null)
+            {
+                response.Error = new ErrorResponse(404, "Driver not found");
+                response.Data = false;
+                return response;
+            }
+
+            existDriver.Delete();
+            
+            var result = await unitOfWork.Drivers.UpdateAsync(existDriver);
+
+            response.Data = true;
+
+            return response;
         }
 
         /// <summary>
@@ -69,9 +91,15 @@ namespace Hamroh_V2.Service.Services
         /// </summary>
         /// <param name="pred"></param>
         /// <returns></returns>
-        public IEnumerable<Driver> GetAll(Expression<Func<Driver, bool>> pred = null)
+        public BaseResponse<IEnumerable<Driver>> GetAll(Expression<Func<Driver, bool>> pred = null, PaginationParameters parameters = null)
         {
-            return unitOfWork.Drivers.GetAll(pred);
+            BaseResponse<IEnumerable<Driver>> response = new BaseResponse<IEnumerable<Driver>>();
+
+            var drivers = unitOfWork.Drivers.GetAll(pred).Where(p => p.State != ItemState.Deleted).ToPagedAsEnumerable(parameters);
+
+            response.Data = drivers;
+
+            return response;
         }
 
         /// <summary>

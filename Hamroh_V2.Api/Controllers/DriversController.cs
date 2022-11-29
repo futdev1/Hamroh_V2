@@ -1,4 +1,5 @@
 ﻿using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Configurations;
 using Hamroh_V2.Domain.Entities.Drivers;
 using Hamroh_V2.Service.DTOs.DriverDTO;
 using Hamroh_V2.Service.Interfaces;
@@ -33,15 +34,17 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Driver> GetAll(long id)
+        public ActionResult<BaseResponse<IEnumerable<Driver>>> GetAll([FromQuery] PaginationParameters parameters = null)
         {
-            return driverService.GetAll(p => p.Id > id);
+            BaseResponse<IEnumerable<Driver>> result = driverService.GetAll(null, parameters);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpDelete]
-        public async Task<ActionResult<bool>> DeleteAsync(long id)
+        public async Task<ActionResult<BaseResponse<bool>>> DeleteAsync(long id)
         {
-            return await driverService.DeleteAsync(p => p.Id == id);
+            var result = await driverService.DeleteAsync(p => p.Id == id);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
         }
 
         [HttpPut]
