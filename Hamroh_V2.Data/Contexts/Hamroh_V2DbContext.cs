@@ -16,7 +16,7 @@ namespace Hamroh_V2.Data.Contexts
 
         public Hamroh_V2DbContext()
         {
-
+            //salom
         }
 
         public virtual DbSet<Client> Clients { get; set; }
