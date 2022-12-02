@@ -20,7 +20,7 @@ namespace Hamroh_V2.Service.Interfaces
 
         Task<Driver> GetAsync(Expression<Func<Driver, bool>> pred);
 
-        Task<Driver> UpdateAsync(long id, DriverForCreationDto driverDto);
+        Task<BaseResponse<Driver>> UpdateAsync(long id, DriverForCreationDto driverDto);
 
         Task<string> SaveFileAsync(Stream file, string fileName);
     }

@@ -118,8 +118,10 @@ namespace Hamroh_V2.Service.Services
         /// <param name="id"></param>
         /// <param name="driverDto"></param>
         /// <returns></returns>
-        public async Task<Driver> UpdateAsync(long id, DriverForCreationDto driverDto)
+        public async Task<BaseResponse<Driver>> UpdateAsync(long id, DriverForCreationDto driverDto)
         {
+            BaseResponse<Driver> response = new BaseResponse<Driver>();
+
             var driver = await unitOfWork.Drivers.GetAsync(p => p.Id == id);
 
             if (driver != null)
@@ -127,10 +129,13 @@ namespace Hamroh_V2.Service.Services
                 driver.FullName = driverDto.FullName;
                 driver.PhoneNumber = driverDto.PhoneNumber;
                 driver.CarName = driverDto.CarName;
-                //driver.CarImage = driverDto.CarImage;
-                //driver.DriverImage = driverDto.DriverImage;
+                //driver.CarImage = driverDto.CarImage.ToString();
+                //driver.DriverImage = driverDto.DriverImage.ToString();
             }
-            return await unitOfWork.Drivers.UpdateAsync(driver);
+
+            response.Data = driver;
+
+            return response;
         }
 
         /// <summary>
@@ -141,14 +146,48 @@ namespace Hamroh_V2.Service.Services
         /// <returns></returns>
         public async Task<string> SaveFileAsync(Stream file, string fileName)
         {
-            fileName = Guid.NewGuid().ToString("N") + "_" + fileName;
-            string storagePath = config.GetSection("Storage:ImageUrl").Value;
-            string filePath = Path.Combine(env.WebRootPath, $"{storagePath}/{fileName}");
-            FileStream mainFile = File.Create(filePath);
-            await file.CopyToAsync(mainFile);
-            mainFile.Close();
+            if (fileName.EndsWith(".png") || fileName.EndsWith(".svg") || fileName.EndsWith(".jpg")
+                || fileName.EndsWith(".PNG") || fileName.EndsWith(".SVG") || fileName.EndsWith(".JPG"))
+            {
+                fileName = Guid.NewGuid().ToString("N") + "_" + fileName;
+                string storagePath = config.GetSection("Storage:ImageUrl").Value;
+                string filePath = Path.Combine(env.WebRootPath, $"{storagePath}/{fileName}");
+                FileStream mainFile = File.Create(filePath);
+                await file.CopyToAsync(mainFile);
+                mainFile.Close();
 
-            return fileName;
+                return fileName;
+            }
+
+            else if (fileName.EndsWith(".MP4") || fileName.EndsWith(".MKV") || fileName.EndsWith("MOV") 
+                || fileName.EndsWith(".mp4") || fileName.EndsWith(".mkv") || fileName.EndsWith("mov"))
+            {
+                fileName = Guid.NewGuid().ToString("N") + "_" + fileName;
+                string storagePath = config.GetSection("Storage:VideoUrl").Value;
+                string filePath = Path.Combine(env.WebRootPath, $"{storagePath}/{fileName}");
+                FileStream mainFile = File.Create(filePath);
+                await file.CopyToAsync(mainFile);
+                mainFile.Close();
+
+                return fileName;
+            }
+
+            else if(fileName.EndsWith(".MP3") || fileName.EndsWith(".M4A") || fileName.EndsWith(".FLAC")
+                || fileName.EndsWith(".mp3") || fileName.EndsWith(".m4a") || fileName.EndsWith(".flac"))    
+            {
+                fileName = Guid.NewGuid().ToString("N") + "_" + fileName;
+                string storagePath = config.GetSection("Storage:AudioUrl").Value;
+                string filePath = Path.Combine(env.WebRootPath, $"{storagePath}/{fileName}");
+                FileStream mainFile = File.Create(filePath);
+                await file.CopyToAsync(mainFile);
+                mainFile.Close();
+
+                return fileName;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -48,10 +48,11 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Driver>> UpdateAsync(long id, DriverForCreationDto driverDto)
+        public async Task<ActionResult<BaseResponse<Driver>>> UpdateAsync(long id, DriverForCreationDto driverDto)
         {
-            return await driverService.UpdateAsync(id, driverDto);
-            ;
+            BaseResponse<Driver> result = await driverService.UpdateAsync(id, driverDto);
+            return StatusCode(result.Code ?? result.Error.Code.Value, result);
+            
         }
     }
 }
