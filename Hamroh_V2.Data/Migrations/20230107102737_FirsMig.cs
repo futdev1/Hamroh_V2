@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using System;
 
 namespace Hamroh_V2.Data.Migrations
 {
-    public partial class FirstMig : Migration
+    public partial class FirsMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

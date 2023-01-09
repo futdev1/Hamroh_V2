@@ -1,4 +1,5 @@
 ﻿using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Configurations;
 using Hamroh_V2.Domain.Entities.Clients;
 using Hamroh_V2.Service.DTOs.ClientDTO;
 using System;
@@ -14,7 +15,7 @@ namespace Hamroh_V2.Service.Interfaces
 
         Task<BaseResponse<bool>> DeleteAsync(Expression<Func<Client, bool>> pred);
 
-        BaseResponse<IEnumerable<Client>> GetAll(Expression<Func<Client, bool>> pred);
+        BaseResponse<IEnumerable<Client>> GetAll(Expression<Func<Client, bool>> pred, PaginationParameters @params);
 
         Task<BaseResponse<ClientForGetDto>> GetAsync(Expression<Func<Client, bool>> pred);
 

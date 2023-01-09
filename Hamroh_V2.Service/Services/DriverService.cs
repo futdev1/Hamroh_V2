@@ -129,8 +129,6 @@ namespace Hamroh_V2.Service.Services
                 driver.FullName = driverDto.FullName;
                 driver.PhoneNumber = driverDto.PhoneNumber;
                 driver.CarName = driverDto.CarName;
-                //driver.CarImage = driverDto.CarImage.ToString();
-                //driver.DriverImage = driverDto.DriverImage.ToString();
             }
 
             response.Data = driver;
@@ -146,6 +144,7 @@ namespace Hamroh_V2.Service.Services
         /// <returns></returns>
         public async Task<string> SaveFileAsync(Stream file, string fileName)
         {
+            #region 
             if (fileName.EndsWith(".png") || fileName.EndsWith(".svg") || fileName.EndsWith(".jpg")
                 || fileName.EndsWith(".PNG") || fileName.EndsWith(".SVG") || fileName.EndsWith(".JPG"))
             {
@@ -188,6 +187,7 @@ namespace Hamroh_V2.Service.Services
             {
                 return null;
             }
+            #endregion
         }
     }
 }

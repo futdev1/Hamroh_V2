@@ -1,4 +1,5 @@
 ﻿using Hamroh_V2.Domain.Commons;
+using Hamroh_V2.Domain.Configurations;
 using Hamroh_V2.Domain.Entities.Clients;
 using Hamroh_V2.Domain.Enums;
 using Hamroh_V2.Service.DTOs.ClientDTO;
@@ -42,20 +43,10 @@ namespace Hamroh_V2.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<BaseResponse<IEnumerable<Client>>> GetAll([FromQuery] long? id)
+        public ActionResult<BaseResponse<IEnumerable<Client>>> GetAll([FromQuery] PaginationParameters? @params)
         {
-            if (id != null)
-            {
-                var result = clientService.GetAll(p => p.Id > id);
+                var result = clientService.GetAll(null, @params);
                 return StatusCode(result.Code ?? result.Error.Code.Value, result);
-            }
-
-            else
-            {
-                var results = clientService.GetAll(null);
-                return StatusCode(results.Code ?? results.Error.Code.Value, results);
-            }
-
         }
 
         [HttpPut("{id}")]
